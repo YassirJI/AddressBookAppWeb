@@ -1,7 +1,7 @@
 package com.addressbook.ui.vaadin.addressbook;
 
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit.AddressbookEditListener;
-import com.addressbook.ui.vaadin.component.AddressesListView;
+import com.addressbook.ui.vaadin.component.AddressesListComponent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
@@ -26,9 +26,8 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-@SuppressWarnings("serial")
-public final class AddressbookView extends Panel implements View,
-        AddressbookEditListener {
+
+public final class AddressbookView extends Panel implements View, AddressbookEditListener {
 
     public static final String EDIT_ID = "addressbook-edit";
     public static final String TITLE_ID = "addressbook-title";
@@ -116,7 +115,7 @@ public final class AddressbookView extends Panel implements View,
     }
 
     private Component buildCustomersList() {
-        Component contentWrapper = createContentWrapper(new AddressesListView());
+        Component contentWrapper = createContentWrapper(new AddressesListComponent());
         contentWrapper.addStyleName("customers-list");
         return contentWrapper;
     }

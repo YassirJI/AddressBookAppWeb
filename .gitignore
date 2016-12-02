@@ -4,4 +4,5 @@ target/
 *.jar
 .project
 .settings/
+.classpath
 src/main/webapp/VAADIN/themes/addressbooktheme/*.css

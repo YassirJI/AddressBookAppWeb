@@ -11666,6 +11666,11 @@ div.v-layout.v-horizontal.v-widget {
 	background: transparent;
 }
 
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .viewheader {
+	padding: 25px;
+	border-bottom: 1px solid #dfdfdf;
+}
+
 .addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .card {
 	padding-left: 0;
 	padding-right: 0;
@@ -11694,7 +11699,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .addressbook-panel-slot {
-	padding: 8px;
+	padding: 20px;
 	min-height: 220px;
 }
 
@@ -11711,7 +11716,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .addressbooktheme .addressbook-view.addressbook-view .addressbook-panels[height-range~="441px-"] .addressbook-panel-slot {
-	height: 50%;
+	height: 80%;
 }
 
 .addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .addressbook-panel-slot.max {

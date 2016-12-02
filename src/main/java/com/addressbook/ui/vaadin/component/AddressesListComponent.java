@@ -1,56 +1,50 @@
 package com.addressbook.ui.vaadin.component;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.addressbook.model.Customer;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
-import com.vaadin.client.widgets.Grid.Column;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.event.ShortcutListener;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.Align;
+import com.vaadin.ui.Table.ColumnHeaderMode;
+import com.vaadin.ui.Table.RowHeaderMode;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-@SuppressWarnings({ "serial"})
-public final class AddressesListView extends VerticalLayout implements View {
 
-	private final Grid grid;
+public final class AddressesListComponent extends VerticalLayout {
+
+	private static final long serialVersionUID = 1L;
+	
+	private final Table table;
 	private Button createReport;
 	private String filterValue = "";
 
-	public AddressesListView() {
+	public AddressesListComponent() {
 		setCaption("My contacts");
 
 		setSizeFull();
-		addStyleName("transactions");
+		addStyleName("customers-list");
 		AddressbookEventBus.register(this);
 
 		addComponent(buildToolbar());
-
-		grid = buildGrid();
-
-		HorizontalLayout main = new HorizontalLayout(grid);
-		main.setSpacing(true);
-		main.setSizeFull();
-		grid.setSizeFull();
-		main.setExpandRatio(grid, 1);
-
-		addComponent(main);
+		table = buildTable();
+		addComponent(table);
 	}
 
 	private Component buildToolbar() {
@@ -91,7 +85,7 @@ public final class AddressesListView extends VerticalLayout implements View {
 						|| passesFilter(customer.getEmail());
 			}).collect(Collectors.toList());
 
-			grid.setContainerDataSource(new BeanItemContainer<>(Customer.class, customers));
+			table.setContainerDataSource(new BeanItemContainer<>(Customer.class, customers));
 		});
 
 		filter.setInputPrompt("Filter");
@@ -112,20 +106,37 @@ public final class AddressesListView extends VerticalLayout implements View {
 		return AddressbookUI.getCustomerService().findAll();
 	}
 
-	private Grid buildGrid() {
-		final Grid grid = new Grid();
-		grid.setSizeFull();
+	private Table buildTable() {
+		final Table table = new Table();
+		
+		table.addStyleName(ValoTheme.TABLE_BORDERLESS);
+		table.addStyleName(ValoTheme.TABLE_NO_STRIPES);
+		table.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
+		table.addStyleName(ValoTheme.TABLE_SMALL);
+		table.setSortEnabled(false);
+		table.setColumnAlignment("name", Align.RIGHT);
+		table.setRowHeaderMode(RowHeaderMode.INDEX);
+		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		table.setSizeFull();
 
-		grid.setColumns("name", "phone", "email");
-		grid.setColumnReorderingAllowed(true);
+        List<Customer> customers = findCustomers();
+        Collections.sort(customers, new Comparator<Customer>() {
+            @Override
+            public int compare(final Customer o1, final Customer o2) {
+                return o2.getName().compareTo(o1.getName());
+            }
+        });
 
-		grid.setContainerDataSource(new BeanItemContainer<>(Customer.class, findCustomers()));
+        table.setContainerDataSource(new BeanItemContainer<Customer>(
+                Customer.class, customers));
 
-		grid.addSelectionListener(event -> createReport
-				.setEnabled(!grid.getSelectedRows().isEmpty()));
-		return grid;
+        table.setVisibleColumns(new String[]{"name"});
+        table.setColumnHeaders(new String[]{"Name"});
+        table.setColumnExpandRatio("name", 1);
+        table.setSortAscending(false);
+        
+        return table;
 	}
-
 
 	void createNewReportFromSelection() {
 		//        grid.getSelectedRow().ifPresent(customer -> {
@@ -141,9 +152,5 @@ public final class AddressesListView extends VerticalLayout implements View {
 			return false;
 		}
 		return subject.trim().toLowerCase().contains(filterValue);
-	}
-
-	@Override
-	public void enter(final ViewChangeEvent event) {
 	}
 }
