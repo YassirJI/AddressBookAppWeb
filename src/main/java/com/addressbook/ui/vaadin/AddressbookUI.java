@@ -67,7 +67,7 @@ public final class AddressbookUI extends UI {
 			// Authenticated user
 			setContent(new MainView());
 			removeStyleName("loginview");
-			getNavigator().navigateTo(getNavigator().getState());
+			getUI().getNavigator().navigateTo(MainView.VIEWNAME);
 		} else {
 			setContent(new LoginView());
 			addStyleName("loginview");

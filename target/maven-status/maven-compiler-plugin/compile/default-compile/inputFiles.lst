@@ -1,4 +1,5 @@
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\model\Customer.java
+D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\component\AddressbookTable.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\MyAddressBookApplication.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\view\AddressbookViewType.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\AddressbookVaadinServlet.java
@@ -14,13 +15,11 @@ D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\A
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\event\AddressbookEventBus.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\repository\CustomerRepository.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\addressbook\AddressbookEdit.java
-D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\OptimizedConnectorBundleLoaderFactory.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\model\AddressbookNotification.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\view\LoginView.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\service\UserService.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\AddressbookNavigator.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\repository\UserRepository.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\service\CustomerServiceImpl.java
-D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\component\TopTenMoviesTable.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\view\AddressbookMenu.java
 D:\Dev\vaadin\Workspace\AddressbookApp\src\main\java\com\addressbook\ui\vaadin\view\MainView.java

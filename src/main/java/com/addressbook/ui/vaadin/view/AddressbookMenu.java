@@ -4,20 +4,16 @@ import com.addressbook.model.User;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.component.ProfilePreferencesWindow;
 import com.addressbook.ui.vaadin.event.AddressbookEvent;
-import com.addressbook.ui.vaadin.event.AddressbookEvent.NotificationsCountUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.PostViewChangeEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.ProfileUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoggedOutEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.google.gwt.thirdparty.guava.common.eventbus.Subscribe;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
@@ -26,14 +22,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
 public class AddressbookMenu extends CustomComponent {
 
 	    public static final String ID = "addressbook-menu";
-	    public static final String NOTIFICATIONS_BADGE_ID = "dashboard-menu-notifications-badge";
+	    public static final String NOTIFICATIONS_BADGE_ID = "addressbook-menu-notifications-badge";
 	    private static final String STYLE_VISIBLE = "valo-menu-visible";
 	    private Label notificationsBadge;
 	    private MenuItem settingsItem;
@@ -43,8 +38,6 @@ public class AddressbookMenu extends CustomComponent {
 	        setId(ID);
 	        setSizeUndefined();
 
-	        // There's only one DashboardMenu per UI so this doesn't need to be
-	        // unregistered from the UI-scoped DashboardEventBus.
 	        AddressbookEventBus.register(this);
 
 	        setCompositionRoot(buildContent());
@@ -61,14 +54,13 @@ public class AddressbookMenu extends CustomComponent {
 
 	        menuContent.addComponent(buildTitle());
 	        menuContent.addComponent(buildUserMenu());
-	        menuContent.addComponent(buildToggleButton());
 	        menuContent.addComponent(buildMenuItems());
 
 	        return menuContent;
 	    }
 
 	    private Component buildTitle() {
-	        Label logo = new Label("QuickTickets <strong>Addressbook</strong>",
+	        Label logo = new Label("My <strong>Addressbook</strong>",
 	                ContentMode.HTML);
 	        logo.setSizeUndefined();
 	        HorizontalLayout logoWrapper = new HorizontalLayout(logo);
@@ -111,25 +103,6 @@ public class AddressbookMenu extends CustomComponent {
 	        return settings;
 	    }
 
-	    private Component buildToggleButton() {
-	        Button valoMenuToggleButton = new Button("Menu", new ClickListener() {
-	            @Override
-	            public void buttonClick(final ClickEvent event) {
-	                if (getCompositionRoot().getStyleName()
-	                        .contains(STYLE_VISIBLE)) {
-	                    getCompositionRoot().removeStyleName(STYLE_VISIBLE);
-	                } else {
-	                    getCompositionRoot().addStyleName(STYLE_VISIBLE);
-	                }
-	            }
-	        });
-	        valoMenuToggleButton.setIcon(FontAwesome.LIST);
-	        valoMenuToggleButton.addStyleName("valo-menu-toggle");
-	        valoMenuToggleButton.addStyleName(ValoTheme.BUTTON_BORDERLESS);
-	        valoMenuToggleButton.addStyleName(ValoTheme.BUTTON_SMALL);
-	        return valoMenuToggleButton;
-	    }
-
 	    private Component buildMenuItems() {
 	        CssLayout menuItemsLayout = new CssLayout();
 	        menuItemsLayout.addStyleName("valo-menuitems");
@@ -161,25 +134,10 @@ public class AddressbookMenu extends CustomComponent {
 	        return addressbookWrapper;
 	    }
 
-	    @Override
-	    public void attach() {
-	        super.attach();
-	        updateNotificationsCount(null);
-	    }
-
 	    @Subscribe
 	    public void postViewChange(final PostViewChangeEvent event) {
 	        // After a successful view change the menu can be hidden in mobile view.
 	        getCompositionRoot().removeStyleName(STYLE_VISIBLE);
-	    }
-
-	    @Subscribe
-	    public void updateNotificationsCount(
-	            final NotificationsCountUpdatedEvent event) {
-	        int unreadNotificationsCount = AddressbookUI.getUserService()
-	                .getUnreadNotificationsCount();
-	        notificationsBadge.setValue(String.valueOf(unreadNotificationsCount));
-	        notificationsBadge.setVisible(unreadNotificationsCount > 0);
 	    }
 
 	    @Subscribe
@@ -204,7 +162,7 @@ public class AddressbookMenu extends CustomComponent {
 	            addClickListener(new ClickListener() {
 	                @Override
 	                public void buttonClick(final ClickEvent event) {
-	                    UI.getCurrent().getNavigator()
+	                    getUI().getNavigator()
 	                            .navigateTo(view.getViewName());
 	                }
 	            });

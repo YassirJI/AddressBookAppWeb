@@ -74,7 +74,7 @@
         }
       }
 
-      .top10-revenue {
+      .customers-list {
         .card {
           padding-left: 0;
           padding-right: 0;
@@ -115,7 +115,7 @@
 
   	  &[width-range~="701px-"] {
   	    .addressbook-panel-slot {
-  	      width: 50% !important;
+  	      width: 100% !important;
   	    }
   	  }
 

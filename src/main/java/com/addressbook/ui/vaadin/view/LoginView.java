@@ -1,6 +1,7 @@
 package com.addressbook.ui.vaadin.view;
 
 import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoginRequestedEvent;
+import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
@@ -74,7 +75,10 @@ public class LoginView extends VerticalLayout implements View{
 		signin.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				AddressbookEventBus.post(new UserLoginRequestedEvent(username
+// TODO
+//				AddressbookEventBus.post(new UserLoginRequestedEvent(username
+//						.getValue(), password.getValue()));
+				((AddressbookUI)getUI()).userLoginRequested(new UserLoginRequestedEvent(username
 						.getValue(), password.getValue()));
 			}
 		});
@@ -91,7 +95,7 @@ public class LoginView extends VerticalLayout implements View{
 		welcome.addStyleName(ValoTheme.LABEL_COLORED);
 		labels.addComponent(welcome);
 
-		Label title = new Label("QuickTickets Dashboard");
+		Label title = new Label("My AddressBooK");
 		title.setSizeUndefined();
 		title.addStyleName(ValoTheme.LABEL_H3);
 		title.addStyleName(ValoTheme.LABEL_LIGHT);

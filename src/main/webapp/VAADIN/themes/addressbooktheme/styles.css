@@ -11666,30 +11666,30 @@ div.v-layout.v-horizontal.v-widget {
 	background: transparent;
 }
 
-.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .top10-revenue .card {
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .card {
 	padding-left: 0;
 	padding-right: 0;
 }
 
-.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .top10-revenue .v-table-table {
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .v-table-table {
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
 
-.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .top10-revenue .v-table-cell-wrapper {
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .v-table-cell-wrapper {
 	padding-left: 13px;
 	padding-right: 13px;
 }
 
-.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .top10-revenue .v-table-cell-content {
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .v-table-cell-content {
 	border-color: #eaeaea;
 }
 
-.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .top10-revenue .v-table-cell-content-rowheader {
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .v-table-cell-content-rowheader {
 	color: #969696;
 }
 
-.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .top10-revenue .v-table-cell-content-rowheader .v-table-cell-wrapper {
+.addressbooktheme .addressbook-view.addressbook-view .addressbook-panels .customers-list .v-table-cell-content-rowheader .v-table-cell-wrapper {
 	padding-right: 0;
 }
 

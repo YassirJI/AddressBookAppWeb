@@ -6,7 +6,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 
 public enum AddressbookViewType {
-    ADDRESSBOOK("addressbook", AddressbookView.class, FontAwesome.HOME, true);
+    ADDRESSBOOK("All customers", AddressbookView.class, FontAwesome.HOME, true);
 
     private final String viewName;
     private final Class<? extends View> viewClass;

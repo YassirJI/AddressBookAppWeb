@@ -33,22 +33,6 @@ public abstract class AddressbookEvent {
 
     }
 
-    public static class NotificationsCountUpdatedEvent {
-    }
-
-    public static final class ReportsCountUpdatedEvent {
-        private final int count;
-
-        public ReportsCountUpdatedEvent(final int count) {
-            this.count = count;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-    }
-
     public static final class PostViewChangeEvent {
         private final AddressbookViewType view;
 

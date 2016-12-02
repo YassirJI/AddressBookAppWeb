@@ -1,6 +1,7 @@
 com\addressbook\ui\vaadin\view\LoginView$1.class
 com\addressbook\ui\vaadin\addressbook\AddressbookView$6.class
 com\addressbook\ui\vaadin\view\AddressbookMenu$4.class
+com\addressbook\ui\vaadin\component\AddressbookTable.class
 com\addressbook\service\UserServiceImpl.class
 com\addressbook\ui\vaadin\AddressbookNavigator$2.class
 com\addressbook\ui\vaadin\event\AddressbookEvent$ReportsCountUpdatedEvent.class
@@ -11,13 +12,13 @@ com\addressbook\ui\vaadin\component\ProfilePreferencesWindow$2.class
 com\addressbook\ui\vaadin\view\AddressbookMenu.class
 com\addressbook\ui\vaadin\addressbook\AddressbookView$3.class
 com\addressbook\ui\vaadin\view\LoginView.class
+com\addressbook\ui\vaadin\component\AddressbookTable$1.class
 com\addressbook\ui\vaadin\event\AddressbookEvent$PostViewChangeEvent.class
 com\addressbook\ui\vaadin\addressbook\AddressbookView$5.class
 com\addressbook\ui\vaadin\event\AddressbookEvent$UserLoginRequestedEvent.class
 com\addressbook\ui\vaadin\addressbook\AddressbookEdit$2.class
 com\addressbook\ui\vaadin\addressbook\AddressbookEdit.class
 com\addressbook\ui\vaadin\AddressbookNavigator$3.class
-com\addressbook\ui\vaadin\AddressbookUI$AddressbookServlet.class
 com\addressbook\ui\vaadin\view\AddressbookMenu$3.class
 com\addressbook\ui\vaadin\AddressbookVaadinServlet.class
 com\addressbook\ui\vaadin\view\AddressbookViewType.class
@@ -31,7 +32,6 @@ com\addressbook\model\AddressbookNotification.class
 com\addressbook\repository\CustomerRepository.class
 com\addressbook\ui\vaadin\document\OptionalSelect$2.class
 com\addressbook\ui\vaadin\view\AddressbookMenu$ValoMenuItemButton$1.class
-com\addressbook\ui\vaadin\component\TopTenMoviesTable$1.class
 com\addressbook\ui\vaadin\component\ProfilePreferencesWindow$1.class
 com\addressbook\ui\vaadin\document\OptionalSelect.class
 com\addressbook\ui\vaadin\event\AddressbookEvent$CloseOpenWindowsEvent.class
@@ -46,10 +46,8 @@ com\addressbook\ui\vaadin\addressbook\AddressbookView$NotificationsButton.class
 com\addressbook\repository\UserRepository.class
 com\addressbook\model\User.class
 com\addressbook\ui\vaadin\AddressbookNavigator.class
-com\addressbook\ui\vaadin\component\TopTenMoviesTable.class
 com\addressbook\ui\vaadin\addressbook\AddressbookView$7.class
 com\addressbook\ui\vaadin\event\AddressbookEvent$UserLoggedOutEvent.class
-com\addressbook\ui\vaadin\OptimizedConnectorBundleLoaderFactory.class
 com\addressbook\ui\vaadin\AddressbookSessionInitListener$1.class
 com\addressbook\service\UserService.class
 com\addressbook\ui\vaadin\event\AddressbookEvent.class

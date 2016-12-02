@@ -24,13 +24,13 @@ public class AddressbookEdit extends Window {
     public AddressbookEdit(final AddressbookEditListener listener,
             final String currentName) {
         this.listener = listener;
-        setCaption("Edit Dashboard");
+        setCaption("Edit Addressbook");
         setModal(true);
         setClosable(false);
         setResizable(false);
         setWidth(300.0f, Unit.PIXELS);
 
-        addStyleName("edit-dashboard");
+        addStyleName("edit-addressbook");
 
         setContent(buildContent(currentName));
     }

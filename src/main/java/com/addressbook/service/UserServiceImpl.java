@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.addressbook.model.AddressbookNotification;
 import com.addressbook.model.User;
 import com.addressbook.repository.UserRepository;
 
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	@Override	
 	public void save(User user) {
 		userRepository.save(user);	
-	};
+	}
 	
 	@Override	
 	public void delete(User user) {
@@ -43,14 +42,4 @@ public class UserServiceImpl implements UserService {
                 + "Cras mattis iudicium purus sit amet fermentum.");
         return user;
     }
-
-	@Override
-	public int getUnreadNotificationsCount() {
-		return 0;
-	}
-
-	@Override
-	public Collection<AddressbookNotification> getNotifications() {
-		return null;
-	}
 }
