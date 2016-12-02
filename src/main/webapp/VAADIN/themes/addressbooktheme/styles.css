@@ -11703,7 +11703,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .addressbooktheme .addressbook-view.addressbook-view .addressbook-panels[width-range~="701px-"] .addressbook-panel-slot {
-	width: 50% !important;
+	width: 100% !important;
 }
 
 .addressbooktheme .addressbook-view.addressbook-view .addressbook-panels[height-range~="0-440px"] .addressbook-panel-slot {

@@ -1,1 +1,7 @@
-target/*
+target/
+.metadata
+*.zip
+*.jar
+.project
+.settings/
+src/main/webapp/VAADIN/themes/addressbooktheme/*.css
