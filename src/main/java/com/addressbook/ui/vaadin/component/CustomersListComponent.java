@@ -27,7 +27,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 
-public final class AddressesListComponent extends VerticalLayout {
+public final class CustomersListComponent extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -35,7 +35,7 @@ public final class AddressesListComponent extends VerticalLayout {
 	private Button createReport;
 	private String filterValue = "";
 
-	public AddressesListComponent() {
+	public CustomersListComponent() {
 		setCaption("My contacts");
 
 		setSizeFull();

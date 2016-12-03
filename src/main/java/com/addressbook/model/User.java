@@ -7,96 +7,101 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @SuppressWarnings("serial")
 @Document(collection = "users")
 public final class User implements Serializable {
-	
-    private String role;
-    private String firstName;
-    private String lastName;
-    private String title;
-    private String email;
-    private String location;
-    private String phone;
-    private Integer newsletterSubscription;
-    private String website;
-    private String bio;
 
-    public String getEmail() {
-        return email;
-    }
+	private String title;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String phone;
+	private String location;
+	private String username;
+	private String password;
+	private Role role;
 
-    public void setEmail(final String email) {
-        this.email = email;
-    }
 
-    public String getLocation() {
-        return location;
-    }
+	public User(String title, String firstName, String lastName, Role role, String email, String phone, String location) {
+		this.title = title;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.role = role;
+		this.email = email;
+		this.phone = phone;
+		this.location = location;
+	}
 
-    public void setLocation(final String location) {
-        this.location = location;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setPhone(final String phone) {
-        this.phone = phone;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public Integer getNewsletterSubscription() {
-        return newsletterSubscription;
-    }
+	public void setTitle(final String title) {
+		this.title = title;
+	}
 
-    public void setNewsletterSubscription(final Integer newsletterSubscription) {
-        this.newsletterSubscription = newsletterSubscription;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getWebsite() {
-        return website;
-    }
+	public void setFirstName(final String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setWebsite(final String website) {
-        this.website = website;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getBio() {
-        return bio;
-    }
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setBio(final String bio) {
-        this.bio = bio;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
+	public String getLocation() {
+		return location;
+	}
 
-    public String getRole() {
-        return role;
-    }
+	public void setLocation(String location) {
+		this.location = location;
+	}
 
-    public void setRole(final String role) {
-        this.role = role;
-    }
+	public Role getRole() {
+		return role;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setRole(final Role role) {
+		this.role = role;
+	}
 
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
-    }
+	public String getPassword() {
+		return password;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public enum Role {
+		ADMIN, VISITOR;
+	}
 }

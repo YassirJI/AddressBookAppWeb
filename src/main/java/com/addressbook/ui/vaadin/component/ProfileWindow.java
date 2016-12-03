@@ -3,9 +3,8 @@ package com.addressbook.ui.vaadin.component;
 import java.util.Arrays;
 
 import com.addressbook.model.User;
-import com.addressbook.ui.vaadin.document.OptionalSelect;
+import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
-import com.addressbook.ui.vaadin.event.AddressbookEvent.ProfileUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -15,7 +14,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.UserError;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -31,7 +29,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -39,18 +36,12 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-public class ProfilePreferencesWindow extends Window {
+public class ProfileWindow extends Window {
 
-    public static final String ID = "profilepreferenceswindow";
+    public static final String ID = "profilewindow";
 
     private final BeanFieldGroup<User> fieldGroup;
-    /*
-     * Fields for editing the User object are defined here as class members.
-     * They are later bound to a FieldGroup by calling
-     * fieldGroup.bindMemberFields(this). The Fields' values don't need to be
-     * explicitly set, calling fieldGroup.setItemDataSource(user) synchronizes
-     * the fields with the user object.
-     */
+    
     @PropertyId("firstName")
     private TextField firstNameField;
     @PropertyId("lastName")
@@ -63,15 +54,8 @@ public class ProfilePreferencesWindow extends Window {
     private TextField locationField;
     @PropertyId("phone")
     private TextField phoneField;
-    @PropertyId("newsletterSubscription")
-    private OptionalSelect<Integer> newsletterField;
-    @PropertyId("website")
-    private TextField websiteField;
-    @PropertyId("bio")
-    private TextArea bioField;
-
-    private ProfilePreferencesWindow(final User user,
-            final boolean preferencesTabOpen) {
+    
+    private ProfileWindow(final User user) {
         addStyleName("profile-window");
         setId(ID);
         Responsive.makeResponsive(this);
@@ -96,34 +80,12 @@ public class ProfilePreferencesWindow extends Window {
         content.setExpandRatio(detailsWrapper, 1f);
 
         detailsWrapper.addComponent(buildProfileTab());
-        detailsWrapper.addComponent(buildPreferencesTab());
-
-        if (preferencesTabOpen) {
-            detailsWrapper.setSelectedTab(1);
-        }
-
+        
         content.addComponent(buildFooter());
 
         fieldGroup = new BeanFieldGroup<User>(User.class);
         fieldGroup.bindMemberFields(this);
         fieldGroup.setItemDataSource(user);
-    }
-
-    private Component buildPreferencesTab() {
-        VerticalLayout root = new VerticalLayout();
-        root.setCaption("Preferences");
-        root.setIcon(FontAwesome.COGS);
-        root.setSpacing(true);
-        root.setMargin(true);
-        root.setSizeFull();
-
-        Label message = new Label("Not implemented in this demo");
-        message.setSizeUndefined();
-        message.addStyleName(ValoTheme.LABEL_LIGHT);
-        root.addComponent(message);
-        root.setComponentAlignment(message, Alignment.MIDDLE_CENTER);
-
-        return root;
     }
 
     private Component buildProfileTab() {
@@ -142,15 +104,6 @@ public class ProfilePreferencesWindow extends Window {
                 new ThemeResource("img/profile-pic-300px.jpg"));
         profilePic.setWidth(100.0f, Unit.PIXELS);
         pic.addComponent(profilePic);
-
-        Button upload = new Button("Change…", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                Notification.show("Not implemented in this demo");
-            }
-        });
-        upload.addStyleName(ValoTheme.BUTTON_TINY);
-        pic.addComponent(upload);
 
         root.addComponent(pic);
 
@@ -181,34 +134,12 @@ public class ProfilePreferencesWindow extends Window {
 
         locationField = new TextField("Location");
         locationField.setWidth("100%");
-        locationField
-                .setComponentError(new UserError("This address doesn't exist"));
+        locationField.setRequired(true);
         details.addComponent(locationField);
 
         phoneField = new TextField("Phone");
         phoneField.setWidth("100%");
         details.addComponent(phoneField);
-
-        newsletterField = new OptionalSelect<Integer>();
-        newsletterField.addOption(0, "Daily");
-        newsletterField.addOption(1, "Weekly");
-        newsletterField.addOption(2, "Monthly");
-        details.addComponent(newsletterField);
-
-        section = new Label("Additional Info");
-        section.addStyleName(ValoTheme.LABEL_H4);
-        section.addStyleName(ValoTheme.LABEL_COLORED);
-        details.addComponent(section);
-
-        websiteField = new TextField("Website");
-        //websiteField.setPlaceholder("http://");
-        websiteField.setWidth("100%");
-        details.addComponent(websiteField);
-
-        bioField = new TextArea("Bio");
-        bioField.setWidth("100%");
-        bioField.setRows(4);
-        details.addComponent(bioField);
 
         return root;
     }
@@ -225,9 +156,7 @@ public class ProfilePreferencesWindow extends Window {
             public void buttonClick(ClickEvent event) {
                 try {
                     fieldGroup.commit();
-                    // Updated user should also be persisted to database. But
-                    // not in this demo.
-
+                   
                     Notification success = new Notification(
                             "Profile updated successfully");
                     success.setDelayMsec(2000);
@@ -235,7 +164,9 @@ public class ProfilePreferencesWindow extends Window {
                     success.setPosition(Position.BOTTOM_CENTER);
                     success.show(Page.getCurrent());
 
-                    AddressbookEventBus.post(new ProfileUpdatedEvent());
+					// TODO AddressbookEventBus.post(new ProfileUpdatedEvent());
+                    User user = fieldGroup.getItemDataSource().getBean();
+                    AddressbookUI.getUserService().save(user);
                     close();
                 } catch (CommitException e) {
                     Notification.show("Error while updating profile",
@@ -250,10 +181,9 @@ public class ProfilePreferencesWindow extends Window {
         return footer;
     }
 
-    public static void open(final User user,
-            final boolean preferencesTabActive) {
+    public static void open(final User user) {
         AddressbookEventBus.post(new CloseOpenWindowsEvent());
-        Window w = new ProfilePreferencesWindow(user, preferencesTabActive);
+        Window w = new ProfileWindow(user);
         UI.getCurrent().addWindow(w);
         w.focus();
     }

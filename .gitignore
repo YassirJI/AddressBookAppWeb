@@ -6,3 +6,4 @@ target/
 .settings/
 .classpath
 src/main/webapp/VAADIN/themes/addressbooktheme/*.css
+/bin/

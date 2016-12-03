@@ -1,14 +1,13 @@
 package com.addressbook.ui.vaadin.view;
 
 import com.addressbook.model.User;
-import com.addressbook.ui.vaadin.AddressbookUI;
-import com.addressbook.ui.vaadin.component.ProfilePreferencesWindow;
+import com.addressbook.ui.vaadin.component.ProfileWindow;
 import com.addressbook.ui.vaadin.event.AddressbookEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.PostViewChangeEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.ProfileUpdatedEvent;
-import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoggedOutEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.google.gwt.thirdparty.guava.common.eventbus.Subscribe;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -84,21 +83,19 @@ public class AddressbookMenu extends CustomComponent {
 	        settingsItem.addItem("Edit Profile", new Command() {
 	            @Override
 	            public void menuSelected(final MenuItem selectedItem) {
-	                ProfilePreferencesWindow.open(user, false);
+	                ProfileWindow.open(user);
 	            }
 	        });
-	        settingsItem.addItem("Preferences", new Command() {
-	            @Override
-	            public void menuSelected(final MenuItem selectedItem) {
-	                ProfilePreferencesWindow.open(user, true);
-	            }
-	        });
+	        
 	        settingsItem.addSeparator();
 	        settingsItem.addItem("Sign Out", new Command() {
 	            @Override
 	            public void menuSelected(final MenuItem selectedItem) {
-	                AddressbookEventBus.post(new UserLoggedOutEvent());
-	            }
+	                //TODO AddressbookEventBus.post(new UserLoggedOutEvent());
+	            	VaadinSession.getCurrent().close();
+					getUI().getNavigator().navigateTo(LoginView.VIEWNAME);
+	        		Page.getCurrent().reload();
+	        	}
 	        });
 	        return settings;
 	    }

@@ -24,14 +24,15 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
+@SuppressWarnings("serial")
+@Title("My Address Book")
 @Theme("addressbooktheme")
 @Widgetset("com.vaadin.DefaultWidgetSet")
-@Title("My Address Book")
-@SuppressWarnings("serial")
 @VaadinSessionScope
 @SpringUI
 @SpringViewDisplay
@@ -55,22 +56,17 @@ public final class AddressbookUI extends UI {
 		updateContent();
 	}
 
-	/**
-	 * Updates the correct content for this UI based on the current user status.
-	 * If the user is logged in with appropriate privileges, main view is shown.
-	 * Otherwise login view is shown.
-	 */
 	private void updateContent() {
 		User user = (User) VaadinSession.getCurrent()
 				.getAttribute(User.class.getName());
-		if (user != null && "admin".equals(user.getRole())) {
-			// Authenticated user
+		if (user != null) {
 			setContent(new MainView());
 			removeStyleName("loginview");
 			getUI().getNavigator().navigateTo(MainView.VIEWNAME);
 		} else {
 			setContent(new LoginView());
 			addStyleName("loginview");
+			getUI().getNavigator().navigateTo(LoginView.VIEWNAME);
 		}
 	}
 
@@ -78,13 +74,18 @@ public final class AddressbookUI extends UI {
 	public void userLoginRequested(final UserLoginRequestedEvent event) {
 		User user = userService.authenticate(event.getUserName(),
 				event.getPassword());
-		VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
-		updateContent();
+		if (user != null) {
+			VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
+			updateContent();
+		} else {
+			Notification.show("Invalid credentials", Notification.Type.ERROR_MESSAGE);
+		}
 	}
 
 	@Subscribe
 	public void userLoggedOut(final UserLoggedOutEvent event) {
 		VaadinSession.getCurrent().close();
+		Page.getCurrent().setUriFragment("");
 		Page.getCurrent().reload();
 	}
 

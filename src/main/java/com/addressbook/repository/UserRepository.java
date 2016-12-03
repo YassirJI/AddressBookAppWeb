@@ -9,5 +9,7 @@ import com.addressbook.model.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-	List<User> findAllBy(Pageable pageable);    
+	List<User> findAllBy(Pageable pageable);
+	
+	User findByUsernameAndPassword(String username, String password);
 }
