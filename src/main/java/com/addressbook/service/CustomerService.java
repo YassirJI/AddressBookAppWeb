@@ -6,11 +6,13 @@ import com.addressbook.model.Customer;
 
 public interface CustomerService {
 
-	public List<Customer> findAll();
-	
-	public List<Customer> findByName(String name);
-	
-	public void save(Customer customer);
-	
-	public void delete(Customer customer);
+	List<Customer> findAll();
+
+	List<Customer> findByName(String name);
+
+	void save(Customer customer);
+
+	void delete(Customer customer);
+
+	List<Customer> findCustomersBy(String criteria);
 }

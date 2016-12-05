@@ -9,8 +9,12 @@ import com.addressbook.model.Customer;
 
 public interface CustomerRepository extends MongoRepository<Customer, String> {
 
-	public List<Customer> findByNameIgnoreCase(String name);
-	public Customer findByEmailIgnoreCase(String email);
+	List<Customer> findByNameIgnoreCase(String name);
+	
+	Customer findByEmailIgnoreCase(String email);
+
 	List<Customer> findAllBy(Pageable pageable);
-    
+
+	List<Customer> findByNameOrPhoneOrEmailIgnoreCase(String criteria);
+
 }

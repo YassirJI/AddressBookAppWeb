@@ -33,7 +33,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-public class EditCustomerDetailsWindow extends Window {
+public class CustomerEditWindow extends Window {
 
     public static final String ID = "editcustomerwindow";
 
@@ -46,8 +46,8 @@ public class EditCustomerDetailsWindow extends Window {
     @PropertyId("phone")
     private TextField phoneField;
     
-    private EditCustomerDetailsWindow(final Customer customer) {
-        addStyleName("customerdetails-window");
+    public CustomerEditWindow(final Customer customer) {
+        addStyleName("customer-edit-window");
         setId(ID);
         Responsive.makeResponsive(this);
 
@@ -86,7 +86,7 @@ public class EditCustomerDetailsWindow extends Window {
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
         root.setMargin(true);
-        root.addStyleName("profile-form");
+        root.addStyleName("customer-form");
 
         FormLayout details = new FormLayout();
         details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
@@ -152,7 +152,7 @@ public class EditCustomerDetailsWindow extends Window {
 
     public static void open(final Customer customer) {
         AddressbookEventBus.post(new CloseOpenWindowsEvent());
-        Window w = new EditCustomerDetailsWindow(customer);
+        Window w = new CustomerEditWindow(customer);
         UI.getCurrent().addWindow(w);
         w.focus();
     }

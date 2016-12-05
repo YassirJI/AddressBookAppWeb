@@ -6,12 +6,12 @@ import com.addressbook.model.User;
 
 public interface UserService {
 
-	public List<User> findAll();
-	
-	public void save(User user);
-	
-	public void delete(User user);
-	
+	List<User> findAll();
+
+	void save(User user);
+
+	void delete(User user);
+
 	User authenticate(String userName, String password);
 
 }

@@ -19,6 +19,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepository.findAll();
 	}
 	
+	@Override
+	public List<Customer> findCustomersBy(String criteria) {
+		return customerRepository.findByNameOrPhoneOrEmailIgnoreCase(criteria);
+	}
+	
 	@Override	
 	public List<Customer> findByName(String name){
 		return customerRepository.findByNameIgnoreCase(name);

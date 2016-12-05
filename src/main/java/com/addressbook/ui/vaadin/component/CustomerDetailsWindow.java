@@ -24,11 +24,11 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 public final class CustomerDetailsWindow extends Window {
 
-    private CustomerDetailsWindow(final Customer customer) {
-        addStyleName("addressdetailswindow");
+    public CustomerDetailsWindow(final Customer customer) {
+        addStyleName("customerdetailswindow");
         Responsive.makeResponsive(this);
 
-        setCaption(customer.getName());
+        setCaption("Address details :");
         center();
         setCloseShortcut(KeyCode.ESCAPE, null);
         setResizable(false);
