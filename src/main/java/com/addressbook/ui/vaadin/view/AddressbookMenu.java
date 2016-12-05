@@ -27,9 +27,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class AddressbookMenu extends CustomComponent {
 
 	    public static final String ID = "addressbook-menu";
-	    public static final String NOTIFICATIONS_BADGE_ID = "addressbook-menu-notifications-badge";
 	    private static final String STYLE_VISIBLE = "valo-menu-visible";
-	    private Label notificationsBadge;
 	    private MenuItem settingsItem;
 
 	    public AddressbookMenu() {
@@ -108,10 +106,7 @@ public class AddressbookMenu extends CustomComponent {
 	            Component menuItemComponent = new ValoMenuItemButton(view);
 
 	            if (view == AddressbookViewType.ADDRESSBOOK) {
-	                notificationsBadge = new Label();
-	                notificationsBadge.setId(NOTIFICATIONS_BADGE_ID);
-	                menuItemComponent = buildBadgeWrapper(menuItemComponent,
-	                        notificationsBadge);
+	                menuItemComponent = buildBadgeWrapper(menuItemComponent);
 	            }
 	            menuItemsLayout.addComponent(menuItemComponent);
 	        }
@@ -119,21 +114,15 @@ public class AddressbookMenu extends CustomComponent {
 
 	    }
 
-	    private Component buildBadgeWrapper(final Component menuItemButton,
-	            final Component badgeLabel) {
+	    private Component buildBadgeWrapper(final Component menuItemButton) {
 	        CssLayout addressbookWrapper = new CssLayout(menuItemButton);
 	        addressbookWrapper.addStyleName("badgewrapper");
 	        addressbookWrapper.addStyleName(ValoTheme.MENU_ITEM);
-	        badgeLabel.addStyleName(ValoTheme.MENU_BADGE);
-	        badgeLabel.setWidthUndefined();
-	        badgeLabel.setVisible(false);
-	        addressbookWrapper.addComponent(badgeLabel);
 	        return addressbookWrapper;
 	    }
 
 	    @Subscribe
 	    public void postViewChange(final PostViewChangeEvent event) {
-	        // After a successful view change the menu can be hidden in mobile view.
 	        getCompositionRoot().removeStyleName(STYLE_VISIBLE);
 	    }
 

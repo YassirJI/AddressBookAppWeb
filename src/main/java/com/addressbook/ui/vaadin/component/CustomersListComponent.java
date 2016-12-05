@@ -96,8 +96,8 @@ public final class CustomersListComponent extends VerticalLayout implements Addr
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				getUI().addWindow(
-							new CustomerEditWindow(null));
-								
+						new CustomerEditWindow(null));
+
 			}
 		});
 		return addBtn;
@@ -187,7 +187,6 @@ public final class CustomersListComponent extends VerticalLayout implements Addr
 	private Grid buildCustomersGrid() {
 		final Grid grid = new Grid();
 		grid.setColumns("name", "phone", "email");
-grid.addStyleName(ValoTheme.TREETABLE_NO_VERTICAL_LINES);
 		List<Customer> customers = findAllCustomers();
 		Collections.sort(customers, new Comparator<Customer>() {
 			@Override
