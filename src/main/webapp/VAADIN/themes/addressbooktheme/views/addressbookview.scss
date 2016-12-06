@@ -18,47 +18,21 @@
       margin: 0 round($view-padding / -3);
 
       .card {
-        height: 100%;
-        overflow: hidden;
-        padding: $v-unit-size + 2px round($view-padding / 2) 0;
-        position: relative;
-
-        .v-table, .v-table-table {
-          background: transparent;
-        }
-      }
-
-      .customers-list {
-      	.v-expand {
-      		.v-slot {
+      	height: 100%;
+	    overflow: hidden;
+	    padding: $v-unit-size + 2px round($view-padding / 2) 0;
+	    position: relative;
+	
+		.customers-list {
+			height: 100%;
+			
+      		.v-slot-viewheader {
       			height: auto !important;
       		}
+      		.v-grid {
+      			height: 100% !important;
+      		}
       	}
-        .card {
-          padding-left: 0;
-          padding-right: 0;
-        }
-
-        .v-table-table {
-          @include box-shadow(none);
-        }
-
-        .v-table-cell-wrapper {
-          padding-left: round($view-padding / 2);
-          padding-right: round($view-padding / 2);
-        }
-
-        .v-table-cell-content {
-          border-color: first-color(valo-border($strength: 0.3));
-        }
-
-        .v-table-cell-content-rowheader {
-          color: valo-font-color($v-app-background-color, 0.4);
-
-          .v-table-cell-wrapper {
-            padding-right: 0;
-          }
-        }
       }
 
       .addressbook-panel-slot {

@@ -27,17 +27,16 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 
-public final class FavoritesView extends Panel implements View {
+public final class ImportListView extends Panel implements View {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String EDIT_ID = "addressbook-edit";
-    public static final String TITLE_ID = "addressbook-title";
+	public static final String TITLE_ID = "addressbook-title";
 
     private CssLayout addressbookPanels;
     private final VerticalLayout root;
     
-    public FavoritesView() {
+    public ImportListView() {
         addStyleName(ValoTheme.PANEL_BORDERLESS);
         setSizeFull();
         AddressbookEventBus.register(this);
@@ -71,51 +70,9 @@ public final class FavoritesView extends Panel implements View {
     }
 
     private Component buildCustomersList() {
-        final CssLayout slot = new CssLayout();
-        slot.setWidth("100%");
-        slot.addStyleName("addressbook-panel-slot");
-
-        CssLayout card = new CssLayout();
-        card.setWidth("100%");
-        card.addStyleName(ValoTheme.LAYOUT_CARD);
-
-        HorizontalLayout toolbar = createPanelToolbar();
-
-        List<Customer> customerList =  AddressbookUI.getCustomerService().findAll();
-		Component content =  new CustomersListComponent(customerList );
-        card.addComponents(toolbar, content);
-        slot.addComponent(card);
-        return slot;
+        return new VerticalLayout();
     }
 
-	private HorizontalLayout createPanelToolbar() {
-		HorizontalLayout toolbar = new HorizontalLayout();
-        toolbar.addStyleName("addressbook-panel-toolbar");
-        toolbar.setWidth("100%");
-
-        Label caption = new Label("My favorites");
-        caption.addStyleName(ValoTheme.LABEL_H4);
-        caption.addStyleName(ValoTheme.LABEL_COLORED);
-        caption.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-        
-        MenuBar tools = new MenuBar();
-        tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
-        
-        MenuItem root = tools.addItem("", FontAwesome.COG, null);
-        root.addItem("Export", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-                Notification.show("Not implemented in this demo");
-            }
-        });
-        
-        toolbar.addComponents(caption, tools);
-        toolbar.setExpandRatio(caption, 1);
-        toolbar.setComponentAlignment(caption, Alignment.MIDDLE_LEFT);
-		return toolbar;
-	}
-
-    
     @Override
     public void enter(final ViewChangeEvent event) {
     }

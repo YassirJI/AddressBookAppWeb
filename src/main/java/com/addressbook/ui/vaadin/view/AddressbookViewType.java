@@ -2,6 +2,7 @@ package com.addressbook.ui.vaadin.view;
 
 import com.addressbook.ui.vaadin.addressbook.AddressbookView;
 import com.addressbook.ui.vaadin.addressbook.FavoritesView;
+import com.addressbook.ui.vaadin.addressbook.ImportListView;
 import com.vaadin.navigator.View;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -9,7 +10,7 @@ import com.vaadin.server.Resource;
 public enum AddressbookViewType {
 	ADDRESSBOOK("All addresses", AddressbookView.class, FontAwesome.LIST_UL, true),
 	FAVORITES("Favorites list", FavoritesView.class, FontAwesome.STAR_O, true),
-	IMPORT("Import list", AddressbookView.class, FontAwesome.UPLOAD, true);
+	IMPORT("Import list", ImportListView.class, FontAwesome.UPLOAD, true);
 
     private final String viewName;
     private final Class<? extends View> viewClass;

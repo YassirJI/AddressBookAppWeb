@@ -50,13 +50,15 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 	public CustomersListComponent(List<Customer> customersList) {
 		this.customersList = customersList;
 
-		setSizeFull();
 		addStyleName("customers-list");
-		AddressbookEventBus.register(this);
-
+		
 		addComponent(buildToolbar());
 		customersGrid = buildCustomersGrid(customersList);
 		addComponent(customersGrid);
+		
+		Responsive.makeResponsive(this);
+		
+		AddressbookEventBus.register(this);
 	}
 
 	private Component buildToolbar() {
@@ -169,7 +171,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 
 		grid.setWidth("100%");
 		grid.setHeight("100%");
-
+		
 		BeanItemContainer<Customer> customerContainer = new BeanItemContainer<Customer>(Customer.class, customersList);
 		grid.setContainerDataSource(customerContainer);
 
@@ -225,7 +227,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 		});
 
 		grid.setEditorEnabled(false);
-
+		
 		return grid;
 	}
 
