@@ -79,8 +79,8 @@ public class CustomerEditWindow extends Window {
 
     private Component buildProfileTab() {
         HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Profile");
-        root.setIcon(FontAwesome.ENVELOPE);
+        root.setCaption("Addressbook line");
+        root.setIcon(FontAwesome.BOOK);
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
         root.setMargin(true);

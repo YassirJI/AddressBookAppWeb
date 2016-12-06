@@ -19,9 +19,9 @@ import com.vaadin.ui.themes.ValoTheme;
 public class AddressbookEdit extends Window {
 
     private final TextField nameField = new TextField("Name");
-    private final AddressbookEditListener listener;
+    private final CustomerListener listener;
 
-    public AddressbookEdit(final AddressbookEditListener listener,
+    public AddressbookEdit(final CustomerListener listener,
             final String currentName) {
         this.listener = listener;
         setCaption("Edit Addressbook");
@@ -82,7 +82,7 @@ public class AddressbookEdit extends Window {
         return footer;
     }
 
-    public interface AddressbookEditListener {
+    public interface CustomerListener {
         void addressbookNameEdited(String name);
     }
 }

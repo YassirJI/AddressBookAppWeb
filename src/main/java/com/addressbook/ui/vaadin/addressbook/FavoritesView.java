@@ -27,7 +27,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 
-public final class AddressbookView extends Panel implements View {
+public final class FavoritesView extends Panel implements View {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -37,7 +37,7 @@ public final class AddressbookView extends Panel implements View {
     private CssLayout addressbookPanels;
     private final VerticalLayout root;
     
-    public AddressbookView() {
+    public FavoritesView() {
         addStyleName(ValoTheme.PANEL_BORDERLESS);
         setSizeFull();
         AddressbookEventBus.register(this);
