@@ -2,6 +2,8 @@ package com.addressbook.ui.vaadin.addressbook;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
+
 import com.addressbook.model.Customer;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.component.CustomersListComponent;

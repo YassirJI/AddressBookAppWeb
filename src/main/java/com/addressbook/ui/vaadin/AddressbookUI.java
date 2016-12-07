@@ -23,6 +23,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -33,7 +34,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @Title("My Address Book")
 @Theme("addressbooktheme")
 @Widgetset("com.vaadin.DefaultWidgetSet")
-@VaadinSessionScope
+@UIScope
 @SpringUI
 @SpringViewDisplay
 public final class AddressbookUI extends UI {

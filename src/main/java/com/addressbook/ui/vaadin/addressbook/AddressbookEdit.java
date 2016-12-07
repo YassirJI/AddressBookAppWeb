@@ -57,22 +57,14 @@ public class AddressbookEdit extends Window {
         footer.setWidth(100.0f, Unit.PERCENTAGE);
 
         Button cancel = new Button("Cancel");
-        cancel.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                close();
-            }
-        });
+        cancel.addClickListener(e -> close());
         cancel.setClickShortcut(KeyCode.ESCAPE, null);
 
         Button save = new Button("Save");
         save.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        save.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(final ClickEvent event) {
+        save.addClickListener(e -> {
                 listener.addressbookNameEdited(nameField.getValue());
                 close();
-            }
         });
         save.setClickShortcut(KeyCode.ENTER, null);
 

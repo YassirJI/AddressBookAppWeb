@@ -176,8 +176,18 @@ public class ProfileWindow extends Window {
             }
         });
         ok.focus();
-        footer.addComponent(ok);
-        footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
+        
+        Button close = new Button("Close");
+        close.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        close.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	close();
+            }});
+        HorizontalLayout buttonsLayout = new HorizontalLayout(ok, close);
+        buttonsLayout.setSpacing(true);
+		footer.addComponent(buttonsLayout);
+        footer.setComponentAlignment(buttonsLayout, Alignment.TOP_RIGHT);
         return footer;
     }
 

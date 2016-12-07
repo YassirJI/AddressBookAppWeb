@@ -8,7 +8,7 @@ import com.vaadin.server.VaadinServlet;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = "/*", name = "AddressbookVaadinServlet", asyncSupported = true)
-@VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = false)
+@VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = true)
 class AddressbookVaadinServlet extends VaadinServlet {
 	 
 	@Override

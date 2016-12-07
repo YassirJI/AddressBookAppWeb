@@ -2,6 +2,8 @@ package com.addressbook.ui.vaadin.addressbook;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
+
 import com.addressbook.model.Customer;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.component.CustomersListComponent;
@@ -25,7 +27,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-
 
 public final class AddressbookView extends Panel implements View {
 

@@ -45,7 +45,12 @@ public class MyAddressBookApplication implements CommandLineRunner {
 		customerRepository.save(new Customer("Sabir", "Smith","sabir@yopmail.com"));
 		customerRepository.save(new Customer("Jaafar", "Smith","jaafar@yopmail.com"));
 		customerRepository.save(new Customer("Nouha", "Smith","nouha@yopmail.com"));
+		customerRepository.save(new Customer("Sofia", "Smith","nada@yopmail.com"));
+		customerRepository.save(new Customer("Jihad", "Smith","nada@yopmail.com"));
 		customerRepository.save(new Customer("Nada", "Smith","nada@yopmail.com"));
+		customerRepository.save(new Customer("Khalid", "Smith","nada@yopmail.com"));
+		customerRepository.save(new Customer("Brahim", "Smith","nada@yopmail.com"));
+		customerRepository.save(new Customer("Jilali", "Smith","nada@yopmail.com"));
 		
 	}
 	

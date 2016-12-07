@@ -30,7 +30,9 @@
       			height: auto !important;
       		}
       		.v-grid {
-      			height: 100% !important;
+	      		.v-grid-row-selected{
+	       			background-color: lightblue;
+	       	    }
       		}
       	}
       }
@@ -71,7 +73,6 @@
         padding-bottom: 0;
       }
     }
-
   }
 
   .addressbook-view {

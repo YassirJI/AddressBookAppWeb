@@ -33,125 +33,136 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 public class CustomerEditWindow extends Window {
 
-    public static final String ID = "editcustomerwindow";
+	public static final String ID = "editcustomerwindow";
 
-    private final BeanFieldGroup<Customer> fieldGroup;
-    
-    @PropertyId("name")
-    private TextField nameField;
-    @PropertyId("email")
-    private TextField emailField;
-    @PropertyId("phone")
-    private TextField phoneField;
-    
-    public CustomerEditWindow(final Customer customer) {
-        addStyleName("customer-edit-window");
-        setId(ID);
-        Responsive.makeResponsive(this);
+	private final BeanFieldGroup<Customer> fieldGroup;
 
-        setModal(true);
-        setCloseShortcut(KeyCode.ESCAPE, null);
-        setResizable(false);
-        setClosable(false);
-        setHeight(90.0f, Unit.PERCENTAGE);
+	@PropertyId("name")
+	private TextField nameField;
+	@PropertyId("email")
+	private TextField emailField;
+	@PropertyId("phone")
+	private TextField phoneField;
 
-        VerticalLayout content = new VerticalLayout();
-        content.setSizeFull();
-        content.setMargin(new MarginInfo(true, false, false, false));
-        setContent(content);
+	public CustomerEditWindow(final Customer customer) {
+		addStyleName("customer-edit-window");
+		setId(ID);
+		Responsive.makeResponsive(this);
 
-        TabSheet detailsWrapper = new TabSheet();
-        detailsWrapper.setSizeFull();
-        detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-        detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-        detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-        content.addComponent(detailsWrapper);
-        content.setExpandRatio(detailsWrapper, 1f);
+		setModal(true);
+		setCloseShortcut(KeyCode.ESCAPE, null);
+		setResizable(false);
+		setClosable(false);
+		setHeight(90.0f, Unit.PERCENTAGE);
 
-        detailsWrapper.addComponent(buildProfileTab());
-        
-        content.addComponent(buildFooter());
+		VerticalLayout content = new VerticalLayout();
+		content.setSizeFull();
+		content.setMargin(new MarginInfo(true, false, false, false));
+		setContent(content);
 
-        fieldGroup = new BeanFieldGroup<Customer>(Customer.class);
-        fieldGroup.bindMemberFields(this);
-        fieldGroup.setItemDataSource(customer);
-    }
+		TabSheet detailsWrapper = new TabSheet();
+		detailsWrapper.setSizeFull();
+		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
+		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
+		content.addComponent(detailsWrapper);
+		content.setExpandRatio(detailsWrapper, 1f);
 
-    private Component buildProfileTab() {
-        HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Addressbook line");
-        root.setIcon(FontAwesome.BOOK);
-        root.setWidth(100.0f, Unit.PERCENTAGE);
-        root.setSpacing(true);
-        root.setMargin(true);
-        root.addStyleName("customer-form");
+		detailsWrapper.addComponent(buildContentTab());
 
-        FormLayout details = new FormLayout();
-        details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-        root.addComponent(details);
-        root.setExpandRatio(details, 1);
+		content.addComponent(buildFooter());
 
-        nameField = new TextField("Name");
+		fieldGroup = new BeanFieldGroup<Customer>(Customer.class);
+		fieldGroup.bindMemberFields(this);
+		fieldGroup.setItemDataSource(customer);
+	}
+
+	private Component buildContentTab() {
+		HorizontalLayout root = new HorizontalLayout();
+		root.setCaption("Addressbook line");
+		root.setIcon(FontAwesome.BOOK);
+		root.setWidth(100.0f, Unit.PERCENTAGE);
+		root.setSpacing(true);
+		root.setMargin(true);
+		root.addStyleName("customer-form");
+
+		FormLayout details = new FormLayout();
+		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		root.addComponent(details);
+		root.setExpandRatio(details, 1);
+
+		nameField = new TextField("Name");
+		nameField.setRequired(true);
         details.addComponent(nameField);
-        
-        Label section = new Label("Contact Info");
-        section.addStyleName(ValoTheme.LABEL_H4);
-        section.addStyleName(ValoTheme.LABEL_COLORED);
-        details.addComponent(section);
 
-        emailField = new TextField("Email");
-        emailField.setWidth("100%");
-        emailField.setRequired(true);
-        details.addComponent(emailField);
+		Label section = new Label("Contact Info");
+		section.addStyleName(ValoTheme.LABEL_H4);
+		section.addStyleName(ValoTheme.LABEL_COLORED);
+		details.addComponent(section);
 
-        phoneField = new TextField("Phone");
-        phoneField.setWidth("100%");
+		emailField = new TextField("Email");
+		emailField.setWidth("100%");
+		emailField.setRequired(true);
+		details.addComponent(emailField);
+
+		phoneField = new TextField("Phone");
+		phoneField.setWidth("100%");
+		phoneField.setRequired(true);
         details.addComponent(phoneField);
 
-        return root;
-    }
+		return root;
+	}
 
-    private Component buildFooter() {
-        HorizontalLayout footer = new HorizontalLayout();
-        footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-        footer.setWidth(100.0f, Unit.PERCENTAGE);
+	private Component buildFooter() {
+		HorizontalLayout footer = new HorizontalLayout();
+		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
+		footer.setWidth(100.0f, Unit.PERCENTAGE);
 
-        Button ok = new Button("OK");
-        ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        ok.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                try {
-                    fieldGroup.commit();
-                   
-                    Notification success = new Notification(
-                            "Profile updated successfully");
-                    success.setDelayMsec(2000);
-                    success.setStyleName("bar success small");
-                    success.setPosition(Position.BOTTOM_CENTER);
-                    success.show(Page.getCurrent());
+		Button ok = new Button("OK");
+		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		ok.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					fieldGroup.commit();
+
+					Notification success = new Notification(
+							"Profile updated successfully");
+					success.setDelayMsec(2000);
+					success.setStyleName("bar success small");
+					success.setPosition(Position.BOTTOM_CENTER);
+					success.show(Page.getCurrent());
 
 					// TODO AddressbookEventBus.post(new ProfileUpdatedEvent());
-                    Customer customer = fieldGroup.getItemDataSource().getBean();
-                    AddressbookUI.getCustomerService().save(customer);
-                    close();
-                } catch (CommitException e) {
-                    Notification.show("Error while updating customer",
-                            Type.ERROR_MESSAGE);
-                }
+					Customer customer = fieldGroup.getItemDataSource().getBean();
+					AddressbookUI.getCustomerService().save(customer);
+					close();
+				} catch (CommitException e) {
+					Notification.show("Error while updating customer",
+							Type.ERROR_MESSAGE);
+				}
 
-            }
-        });
-        ok.focus();
-        footer.addComponent(ok);
-        footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
-        return footer;
-    }
+			}
+		});
+		ok.focus();
+		Button close = new Button("Close");
+		close.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		close.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				close();
+			}});
+		HorizontalLayout buttonsLayout = new HorizontalLayout(ok, close);
+		buttonsLayout.setSpacing(true);
+		footer.addComponent(buttonsLayout);
+		footer.setComponentAlignment(buttonsLayout, Alignment.TOP_RIGHT);
+		return footer;
+	}
 
-    public static void open(final Customer customer) {
-        AddressbookEventBus.post(new CloseOpenWindowsEvent());
-        Window w = new CustomerEditWindow(customer);
-        UI.getCurrent().addWindow(w);
-        w.focus();
-    }
+	public static void open(final Customer customer) {
+		AddressbookEventBus.post(new CloseOpenWindowsEvent());
+		Window w = new CustomerEditWindow(customer);
+		UI.getCurrent().addWindow(w);
+		w.focus();
+	}
 }
