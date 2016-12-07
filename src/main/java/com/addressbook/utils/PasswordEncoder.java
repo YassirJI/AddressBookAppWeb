@@ -3,7 +3,7 @@ package com.addressbook.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class PasswordHashGenerator {
+public class PasswordEncoder {
 
 	public static String generate(String passwordToHash) 
 	{

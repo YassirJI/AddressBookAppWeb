@@ -30,7 +30,7 @@ public final class CustomerDetailsWindow extends Window {
 
         setCaption("Address details :");
         center();
-        setCloseShortcut(KeyCode.ESCAPE, null);
+        addCloseShortcut(KeyCode.ESCAPE, null);
         setResizable(false);
         setClosable(false);
         setHeight(90.0f, Unit.PERCENTAGE);

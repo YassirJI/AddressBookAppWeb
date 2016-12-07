@@ -50,7 +50,7 @@ public class CustomerEditWindow extends Window {
 		Responsive.makeResponsive(this);
 
 		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
+		addCloseShortcut(KeyCode.ESCAPE, null);
 		setResizable(false);
 		setClosable(false);
 		setHeight(90.0f, Unit.PERCENTAGE);

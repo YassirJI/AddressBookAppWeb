@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.addressbook.model.User;
 import com.addressbook.repository.UserRepository;
-import com.addressbook.utils.PasswordHashGenerator;
+import com.addressbook.utils.PasswordEncoder;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User authenticate(String userName, String password) {
-		String generatedPassword = PasswordHashGenerator.generate(password);
+		String generatedPassword = PasswordEncoder.generate(password);
 		User user = userRepository.findByUsernameAndPassword(userName, generatedPassword);
         return user;
     }

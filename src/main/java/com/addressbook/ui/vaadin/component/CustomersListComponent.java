@@ -1,8 +1,5 @@
 package com.addressbook.ui.vaadin.component;
 
-import static java.lang.Boolean.TRUE;
-
-import static java.lang.Boolean.FALSE;
 import java.util.List;
 
 import com.addressbook.model.Customer;
@@ -10,7 +7,6 @@ import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit;
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit.CustomerListener;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -22,12 +18,9 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.DetailsGenerator;
-import com.vaadin.ui.Grid.RowReference;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -175,40 +168,29 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 		grid.removeColumn("id");
 		grid.setColumnReorderingAllowed(true);
 
-		grid.setDetailsGenerator(new DetailsGenerator() {
-			@Override
-			public Component getDetails(RowReference rowReference) {
-				Customer order = (Customer) rowReference.getItemId();
+		grid.setDetailsGenerator(rowReference -> {
+				//Customer order = (Customer) rowReference.getItemId();
 
 				HorizontalLayout layout = new HorizontalLayout(buildEditButton(true),buildRemoveButton(true), buildFavoriteButton(true),buildShareButton(true));
 				layout.setMargin(true);
 				layout.setSpacing(true);
-
 				return layout;
-			}
 		});
 
-		grid.addItemClickListener(new ItemClickListener() {
-			@Override
-			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()) {
-					Object itemId = event.getItemId();
-					grid.setDetailsVisible(itemId,
-							!grid.isDetailsVisible(itemId));
+		grid.addItemClickListener(e -> {
+				if (e.isDoubleClick()) {
+					Object itemId = e.getItemId();
+					grid.setDetailsVisible(itemId, !grid.isDetailsVisible(itemId));
 				}
-			}
 		});
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
-		grid.addSelectionListener(new SelectionListener() {
-			@Override
-			public void select(SelectionEvent event) {
-				if (event.getSelected().iterator().hasNext()) {
-					selectedCustomer = (Customer) event.getSelected().iterator().next();
+		grid.addSelectionListener(e-> {
+				if (e.getSelected().iterator().hasNext()) {
+					selectedCustomer = (Customer) e.getSelected().iterator().next();
 				}
 				//				getUI().addWindow(new CustomerDetailsWindow(selectedCustomer));
 				enableButtons(true);
-			}
 		});
 
 		grid.setEditorEnabled(false);

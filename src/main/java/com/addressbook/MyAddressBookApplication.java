@@ -10,7 +10,7 @@ import com.addressbook.model.User;
 import com.addressbook.model.User.Role;
 import com.addressbook.repository.CustomerRepository;
 import com.addressbook.repository.UserRepository;
-import com.addressbook.utils.PasswordHashGenerator;
+import com.addressbook.utils.PasswordEncoder;
 
 @SpringBootApplication
 public class MyAddressBookApplication implements CommandLineRunner {
@@ -59,12 +59,12 @@ public class MyAddressBookApplication implements CommandLineRunner {
 		
 		User user = new User("Mr", "Yassir","JANATI",Role.VISITOR,"yassirji@yopmail.com", "0621781278", "FRANCE");
 		user.setUsername("yassirji");
-		user.setPassword(PasswordHashGenerator.generate("yassirji"));
+		user.setPassword(PasswordEncoder.generate("yassirji"));
         userRepository.save(user);
         
         user = new User("Mr", "Admin","Admin",Role.ADMIN,"admin@yopmail.com", "0678218721", "ENGLAND");
 		user.setUsername("admin");
-		user.setPassword(PasswordHashGenerator.generate("admin"));
+		user.setPassword(PasswordEncoder.generate("admin"));
         userRepository.save(user);
 		
 	}
