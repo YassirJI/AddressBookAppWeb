@@ -82,7 +82,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 
 	private Button buildAddButton(boolean enabled) {
 		Button button = buildButton("ADD_ADDRESS","Add new address", FontAwesome.PLUS, enabled,
-				e -> getUI().addWindow(new CustomerEditWindow(new Customer())));
+				e -> getUI().addWindow(new CustomerEditWindow(new Customer("","",""))));
 		button.setEnabled(true);
 		return button;
 	}

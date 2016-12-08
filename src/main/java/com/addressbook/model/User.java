@@ -2,12 +2,20 @@ package com.addressbook.model;
 
 import java.io.Serializable;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@SuppressWarnings("serial")
-@Document(collection = "users")
+
+@Entity
 public final class User implements Serializable {
 
+
+	private static final long serialVersionUID = 2L;
+
+	@Id
+	@GeneratedValue
+	public String id;
 	private String title;
 	private String firstName;
 	private String lastName;
@@ -27,6 +35,14 @@ public final class User implements Serializable {
 		this.email = email;
 		this.phone = phone;
 		this.location = location;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -102,6 +118,6 @@ public final class User implements Serializable {
 	}
 
 	public enum Role {
-		ADMIN, VISITOR;
+		ADMIN, USER;
 	}
 }

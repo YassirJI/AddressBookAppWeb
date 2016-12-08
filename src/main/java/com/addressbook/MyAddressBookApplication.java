@@ -57,7 +57,7 @@ public class MyAddressBookApplication implements CommandLineRunner {
 	public void initUsers(){
 		userRepository.deleteAll();
 		
-		User user = new User("Mr", "Yassir","JANATI",Role.VISITOR,"yassirji@yopmail.com", "0621781278", "FRANCE");
+		User user = new User("Mr", "Yassir","JANATI", Role.USER,"yassirji@yopmail.com", "0621781278", "FRANCE");
 		user.setUsername("yassirji");
 		user.setPassword(PasswordEncoder.generate("yassirji"));
         userRepository.save(user);

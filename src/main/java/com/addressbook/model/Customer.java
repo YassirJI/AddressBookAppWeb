@@ -1,23 +1,35 @@
 package com.addressbook.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
 
-@Document(collection = "cutomers")
-public class Customer {
-	
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+
+@Entity
+public class Customer implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-    public String id;
+	@GeneratedValue
+	public String id;
+	
+	@Column(nullable = false)
 	private String name;
+	
+	@Column(nullable = false)
 	private String phone;
+	
+	@Column(nullable = false)
 	private String email;
-	
-	public Customer() {
-		this.name = "";
-		this.phone = "";
-		this.email = "";
+
+	protected Customer() {
 	}
-	
+
 	public Customer(String name, String phone, String email) {
 		this.name = name;
 		this.phone = phone;
@@ -47,11 +59,11 @@ public class Customer {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	   @Override
-	    public String toString() {
-	        return String.format(
-	                "Customer[id=%s, name='%s', email='%s', phone='%s']",
-	                id, name, email, phone);
-	    }
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Customer[id=%s, name='%s', email='%s', phone='%s']",
+				id, name, email, phone);
+	}
 }
