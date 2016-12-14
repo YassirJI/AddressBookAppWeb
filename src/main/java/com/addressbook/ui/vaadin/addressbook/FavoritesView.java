@@ -2,19 +2,19 @@ package com.addressbook.ui.vaadin.addressbook;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Scope;
-
 import com.addressbook.model.Customer;
-import com.addressbook.ui.vaadin.AddressbookUI;
+import com.addressbook.model.User;
 import com.addressbook.ui.vaadin.component.CustomersListComponent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
+import com.google.common.collect.Lists;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -83,7 +83,7 @@ public final class FavoritesView extends Panel implements View {
 
         HorizontalLayout toolbar = createPanelToolbar();
 
-        List<Customer> customerList =  AddressbookUI.getCustomerService().findAll();
+        List<Customer> customerList =  Lists.newArrayList(getCurrentUser().getCustomers());
 		Component content =  new CustomersListComponent(customerList );
         card.addComponents(toolbar, content);
         slot.addComponent(card);
@@ -121,4 +121,10 @@ public final class FavoritesView extends Panel implements View {
     @Override
     public void enter(final ViewChangeEvent event) {
     }
+    
+    private User getCurrentUser() {
+        return (User) VaadinSession.getCurrent()
+                .getAttribute(User.class.getName());
+    }
+
 }

@@ -11,17 +11,16 @@ import com.addressbook.repository.CustomerRepository;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-	@Autowired
 	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private CustomerServiceImpl(CustomerRepository customerRepository){
+		this.customerRepository = customerRepository;
+	}
 	
 	@Override
 	public List<Customer> findAll(){
 		return customerRepository.findAll();
-	}
-	
-	@Override
-	public List<Customer> findCustomersBy(String criteria) {
-		return customerRepository.findByNameOrPhoneOrEmailIgnoreCase(criteria);
 	}
 	
 	@Override	

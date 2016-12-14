@@ -1,31 +1,33 @@
 package com.addressbook.model;
 
-import java.io.Serializable;
+
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Customer implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class Customer{
 
 	@Id
 	@GeneratedValue
-	public String id;
-	
+	public long id;
+
 	@Column(nullable = false)
 	private String name;
-	
+
 	@Column(nullable = false)
 	private String phone;
-	
+
 	@Column(nullable = false)
 	private String email;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<User> users;
 
 	protected Customer() {
 	}
@@ -35,10 +37,10 @@ public class Customer implements Serializable{
 		this.phone = phone;
 		this.email = email;
 	}
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -60,6 +62,14 @@ public class Customer implements Serializable{
 		this.email = email;
 	}
 
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format(

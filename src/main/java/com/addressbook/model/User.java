@@ -1,21 +1,24 @@
 package com.addressbook.model;
 
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 
 @Entity
-public final class User implements Serializable {
-
-
-	private static final long serialVersionUID = 2L;
+public class User {
 
 	@Id
 	@GeneratedValue
-	public String id;
+	public long id;
 	private String title;
 	private String firstName;
 	private String lastName;
@@ -25,7 +28,13 @@ public final class User implements Serializable {
 	private String username;
 	private String password;
 	private Role role;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_customer", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+	private Set<Customer> customers;
 
+	public User(){
+	}
 
 	public User(String title, String firstName, String lastName, Role role, String email, String phone, String location) {
 		this.title = title;
@@ -37,11 +46,11 @@ public final class User implements Serializable {
 		this.location = location;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -115,6 +124,17 @@ public final class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Set<Customer> getCustomers() {
+		if (customers==null) {
+			return new HashSet<>();
+		}
+		return customers;
+	}
+
+	public void setCustomers(Set<Customer> customers) {
+		this.customers = customers;
 	}
 
 	public enum Role {

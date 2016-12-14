@@ -14,5 +14,4 @@ public interface CustomerService {
 
 	void delete(Customer customer);
 
-	List<Customer> findCustomersBy(String criteria);
 }

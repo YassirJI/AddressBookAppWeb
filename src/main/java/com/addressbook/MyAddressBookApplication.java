@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.addressbook.model.Customer;
 import com.addressbook.model.User;
@@ -17,6 +18,7 @@ public class MyAddressBookApplication implements CommandLineRunner {
 
 	@Autowired
 	private CustomerRepository customerRepository;
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -24,11 +26,12 @@ public class MyAddressBookApplication implements CommandLineRunner {
 		SpringApplication.run(MyAddressBookApplication.class, args);
 	}
 	
-	
+	@Transactional
 	public void run(String... args) throws Exception {
 		initUsers();
 		initCustomers();
 	}
+	
 	public void initCustomers(){
 		customerRepository.deleteAll();
 

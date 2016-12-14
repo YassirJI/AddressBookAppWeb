@@ -3,6 +3,8 @@ package com.addressbook.ui.vaadin.component;
 import java.util.List;
 
 import com.addressbook.model.Customer;
+import com.addressbook.model.User;
+import com.addressbook.service.UserService;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit;
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit.CustomerListener;
@@ -17,6 +19,7 @@ import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -103,8 +106,17 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 	}
 
 	private Button buildFavoriteButton(boolean enabled) {
-		return buildButton("FAVORITE_ADDRESS","Favorite Address", FontAwesome.STAR_O, enabled, e -> 
-		getUI().addWindow(new AddressbookEdit(CustomersListComponent.this, null)));
+		return buildButton("FAVORITE_ADDRESS","Favorite Address", FontAwesome.STAR_O, enabled, e ->  {
+			if (selectedCustomer!=null) {
+				if (getCurrentUser().getCustomers().contains(selectedCustomer)) {
+					AddressbookUI.getUserService().removeFavoriteCustomer(getCurrentUser().getId(), selectedCustomer);					
+				} else {
+					AddressbookUI.getUserService().addFavoriteCustomer(getCurrentUser().getId(), selectedCustomer);
+				}
+			} else {
+				Notification.show("You must select a address !!");
+			}
+		});
 	}
 
 	private Button buildButton(String id, String description, Resource icon, boolean enabled, ClickListener clickListener) {
@@ -166,6 +178,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 		grid.getColumn("email").setLastFrozenColumn();
 
 		grid.removeColumn("id");
+		grid.removeColumn("users");
 		grid.setColumnReorderingAllowed(true);
 
 		grid.setDetailsGenerator(rowReference -> {
@@ -224,4 +237,9 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 	public void addressbookNameEdited(final String name) {
 		//titleLabel.setValue(name);
 	}
+	
+	private User getCurrentUser() {
+        return (User) VaadinSession.getCurrent()
+                .getAttribute(User.class.getName());
+    }
 }
