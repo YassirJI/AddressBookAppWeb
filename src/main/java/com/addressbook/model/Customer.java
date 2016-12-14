@@ -3,6 +3,7 @@ package com.addressbook.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +27,7 @@ public class Customer{
 	@Column(nullable = false)
 	private String email;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<User> users;
 
 	protected Customer() {
@@ -69,6 +70,26 @@ public class Customer{
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer customer = (Customer) obj;
+		return id == customer.getId();
+	}
+	
+	@Override
+	public int hashCode(){
+        int hashcode = 0;
+        hashcode += name.length();
+        hashcode += email.length();
+        return hashcode;
+    }
 	
 	@Override
 	public String toString() {

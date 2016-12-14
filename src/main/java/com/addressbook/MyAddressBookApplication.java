@@ -26,7 +26,6 @@ public class MyAddressBookApplication implements CommandLineRunner {
 		SpringApplication.run(MyAddressBookApplication.class, args);
 	}
 	
-	@Transactional
 	public void run(String... args) throws Exception {
 		initUsers();
 		initCustomers();
@@ -35,25 +34,25 @@ public class MyAddressBookApplication implements CommandLineRunner {
 	public void initCustomers(){
 		customerRepository.deleteAll();
 
-		customerRepository.save(new Customer("Alice", "Smith","alice@yopmail.com"));
-		customerRepository.save(new Customer("Bob", "Smith","bob@yopmail.com"));
-		customerRepository.save(new Customer("Yassir", "Smith","yassir@yopmail.com"));
-		customerRepository.save(new Customer("Mouad", "Smith","mouad@yopmail.com"));
-		customerRepository.save(new Customer("Adil", "Smith","adil@yopmail.com"));
-		customerRepository.save(new Customer("Boutain", "Smith","boutaina@yopmail.com"));
-		customerRepository.save(new Customer("Manal", "Smith","manal@yopmail.com"));
-		customerRepository.save(new Customer("Sara", "Smith","Sara@yopmail.com"));
-		customerRepository.save(new Customer("Aimane", "Smith","aimane@yopmail.com"));
-		customerRepository.save(new Customer("Rachid", "Smith","rachid@yopmail.com"));
-		customerRepository.save(new Customer("Sabir", "Smith","sabir@yopmail.com"));
-		customerRepository.save(new Customer("Jaafar", "Smith","jaafar@yopmail.com"));
-		customerRepository.save(new Customer("Nouha", "Smith","nouha@yopmail.com"));
-		customerRepository.save(new Customer("Sofia", "Smith","nada@yopmail.com"));
-		customerRepository.save(new Customer("Jihad", "Smith","nada@yopmail.com"));
-		customerRepository.save(new Customer("Nada", "Smith","nada@yopmail.com"));
-		customerRepository.save(new Customer("Khalid", "Smith","nada@yopmail.com"));
-		customerRepository.save(new Customer("Brahim", "Smith","nada@yopmail.com"));
-		customerRepository.save(new Customer("Jilali", "Smith","nada@yopmail.com"));
+		customerRepository.save(new Customer("Alice", "0696784512","alice@yopmail.com"));
+		customerRepository.save(new Customer("Bob", "0696784512","bob@yopmail.com"));
+		customerRepository.save(new Customer("Yassir", "0696784512","yassir@yopmail.com"));
+		customerRepository.save(new Customer("Mouad", "0696784512","mouad@yopmail.com"));
+		customerRepository.save(new Customer("Adil", "0696784512","adil@yopmail.com"));
+		customerRepository.save(new Customer("Boutain", "0696784512","boutaina@yopmail.com"));
+		customerRepository.save(new Customer("Manal", "0696784512","manal@yopmail.com"));
+		customerRepository.save(new Customer("Sara", "0696784512","Sara@yopmail.com"));
+		customerRepository.save(new Customer("Aimane", "0696784512","aimane@yopmail.com"));
+		customerRepository.save(new Customer("Rachid", "0696784512","rachid@yopmail.com"));
+		customerRepository.save(new Customer("Sabir", "0696784512","sabir@yopmail.com"));
+		customerRepository.save(new Customer("Jaafar", "0696784512","jaafar@yopmail.com"));
+		customerRepository.save(new Customer("Nouha", "0696784512","nouha@yopmail.com"));
+		customerRepository.save(new Customer("Sofia", "0696784512","nada@yopmail.com"));
+		customerRepository.save(new Customer("Jihad", "0696784512","nada@yopmail.com"));
+		customerRepository.save(new Customer("Nada", "0696784512","nada@yopmail.com"));
+		customerRepository.save(new Customer("Khalid", "0696784512","nada@yopmail.com"));
+		customerRepository.save(new Customer("Brahim", "0696784512","nada@yopmail.com"));
+		customerRepository.save(new Customer("Jilali", "0696784512","nada@yopmail.com"));
 		
 	}
 	

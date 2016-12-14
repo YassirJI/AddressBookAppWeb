@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.addressbook.model.Customer;
 import com.addressbook.model.User;
-import com.addressbook.service.UserService;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit;
 import com.addressbook.ui.vaadin.addressbook.AddressbookEdit.CustomerListener;
@@ -52,14 +51,14 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 
 		addStyleName("customers-list");
 		setSizeFull();
-		
+
 		addComponent(buildToolbar());
 		customersGrid = buildCustomersGrid(customersList);
 		addComponent(customersGrid);
 		setExpandRatio(customersGrid, 1);
-		
+
 		Responsive.makeResponsive(this);
-		
+
 		AddressbookEventBus.register(this);
 	}
 
@@ -92,12 +91,12 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 
 	private Button buildEditButton(boolean enabled) {
 		return buildButton("EDIT_ADDRESS","Edit Address", FontAwesome.EDIT, enabled, e -> {
-				if (selectedCustomer!=null) {
-					getUI().addWindow(new CustomerEditWindow(selectedCustomer));
-				} else {
-					Notification.show("You must select a address !!");
-				}
-			});
+			if (selectedCustomer!=null) {
+				getUI().addWindow(new CustomerEditWindow(selectedCustomer));
+			} else {
+				Notification.show("You must select a address !!");
+			}
+		});
 	}
 
 	private Button buildShareButton(boolean enabled) {
@@ -108,7 +107,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 	private Button buildFavoriteButton(boolean enabled) {
 		return buildButton("FAVORITE_ADDRESS","Favorite Address", FontAwesome.STAR_O, enabled, e ->  {
 			if (selectedCustomer!=null) {
-				if (getCurrentUser().getCustomers().contains(selectedCustomer)) {
+				if (getUserCustomers().contains(selectedCustomer)) {
 					AddressbookUI.getUserService().removeFavoriteCustomer(getCurrentUser().getId(), selectedCustomer);					
 				} else {
 					AddressbookUI.getUserService().addFavoriteCustomer(getCurrentUser().getId(), selectedCustomer);
@@ -117,6 +116,10 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 				Notification.show("You must select a address !!");
 			}
 		});
+	}
+
+	private List<Customer> getUserCustomers() {
+		return AddressbookUI.getUserService().findCustomersByUser(getCurrentUser().getId());
 	}
 
 	private Button buildButton(String id, String description, Resource icon, boolean enabled, ClickListener clickListener) {
@@ -159,7 +162,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 
 		grid.setWidth("100%");
 		grid.setHeight("90%");
-		
+
 		BeanItemContainer<Customer> customerContainer = new BeanItemContainer<Customer>(Customer.class, customersList);
 		grid.setContainerDataSource(customerContainer);
 
@@ -182,34 +185,34 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 		grid.setColumnReorderingAllowed(true);
 
 		grid.setDetailsGenerator(rowReference -> {
-				//Customer order = (Customer) rowReference.getItemId();
+			//Customer order = (Customer) rowReference.getItemId();
 
-				HorizontalLayout layout = new HorizontalLayout(buildEditButton(true),buildRemoveButton(true), buildFavoriteButton(true),buildShareButton(true));
-				layout.setMargin(true);
-				layout.setSpacing(true);
-				return layout;
+			HorizontalLayout layout = new HorizontalLayout(buildEditButton(true),buildRemoveButton(true), buildFavoriteButton(true),buildShareButton(true));
+			layout.setMargin(true);
+			layout.setSpacing(true);
+			return layout;
 		});
 
 		grid.addItemClickListener(e -> {
-				if (e.isDoubleClick()) {
-					Object itemId = e.getItemId();
-					grid.setDetailsVisible(itemId, !grid.isDetailsVisible(itemId));
-				}
+			if (e.isDoubleClick()) {
+				Object itemId = e.getItemId();
+				grid.setDetailsVisible(itemId, !grid.isDetailsVisible(itemId));
+			}
 		});
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(e-> {
-				if (e.getSelected().iterator().hasNext()) {
-					selectedCustomer = (Customer) e.getSelected().iterator().next();
-				}
-				//				getUI().addWindow(new CustomerDetailsWindow(selectedCustomer));
-				enableButtons(true);
+			if (e.getSelected().iterator().hasNext()) {
+				selectedCustomer = (Customer) e.getSelected().iterator().next();
+			}
+			//				getUI().addWindow(new CustomerDetailsWindow(selectedCustomer));
+			enableButtons(true);
 		});
 
 		grid.setEditorEnabled(false);
-		
+
 		Responsive.makeResponsive(grid);
-		
+
 		return grid;
 	}
 
@@ -219,7 +222,7 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 		shareBtn.setEnabled(state);
 		favoriteBtn.setEnabled(state);
 	}
-	
+
 	private void refreshGrid(Grid grid){
 		grid.clearSortOrder();
 	}
@@ -237,9 +240,9 @@ public final class CustomersListComponent extends VerticalLayout implements Cust
 	public void addressbookNameEdited(final String name) {
 		//titleLabel.setValue(name);
 	}
-	
+
 	private User getCurrentUser() {
-        return (User) VaadinSession.getCurrent()
-                .getAttribute(User.class.getName());
-    }
+		return (User) VaadinSession.getCurrent()
+				.getAttribute(User.class.getName());
+	}
 }

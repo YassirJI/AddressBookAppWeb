@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
 		user.getCustomers().remove(customer);
 		userRepository.save(user);
 	}
+
+	@Override
+	public List<Customer> findCustomersByUser(long id) {
+		return userRepository.findCustomersByUserId(id);
+	}
 }

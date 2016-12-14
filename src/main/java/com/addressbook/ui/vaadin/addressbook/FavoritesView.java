@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.addressbook.model.Customer;
 import com.addressbook.model.User;
+import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.component.CustomersListComponent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
@@ -27,7 +28,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-
 
 public final class FavoritesView extends Panel implements View {
 
@@ -83,7 +83,7 @@ public final class FavoritesView extends Panel implements View {
 
         HorizontalLayout toolbar = createPanelToolbar();
 
-        List<Customer> customerList =  Lists.newArrayList(getCurrentUser().getCustomers());
+        List<Customer> customerList =  Lists.newArrayList(getFavoriteCustomers());
 		Component content =  new CustomersListComponent(customerList );
         card.addComponents(toolbar, content);
         slot.addComponent(card);
@@ -127,4 +127,7 @@ public final class FavoritesView extends Panel implements View {
                 .getAttribute(User.class.getName());
     }
 
+    private List<Customer> getFavoriteCustomers() {
+		return AddressbookUI.getUserService().findCustomersByUser(getCurrentUser().getId());
+	}
 }

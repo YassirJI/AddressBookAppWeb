@@ -19,5 +19,7 @@ public interface UserService {
 
 	User authenticate(String userName, String password);
 
+	List<Customer> findCustomersByUser(long id);
+
 
 }

@@ -28,7 +28,7 @@ public class User {
 	private String username;
 	private String password;
 	private Role role;
-	
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_customer", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private Set<Customer> customers;
@@ -125,7 +125,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Set<Customer> getCustomers() {
 		if (customers==null) {
 			return new HashSet<>();
@@ -135,6 +135,18 @@ public class User {
 
 	public void setCustomers(Set<Customer> customers) {
 		this.customers = customers;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User user = (User) obj;
+		return id == user.getId();
 	}
 
 	public enum Role {
