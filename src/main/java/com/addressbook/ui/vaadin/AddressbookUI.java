@@ -13,7 +13,7 @@ import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoginRequestedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.addressbook.ui.vaadin.view.LoginView;
 import com.addressbook.ui.vaadin.view.MainView;
-import com.google.gwt.thirdparty.guava.common.eventbus.Subscribe;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
@@ -85,8 +85,9 @@ public final class AddressbookUI extends UI {
 	@Subscribe
 	public void userLoggedOut(final UserLoggedOutEvent event) {
 		VaadinSession.getCurrent().close();
-		Page.getCurrent().setUriFragment("");
+		getUI().getNavigator().navigateTo(LoginView.VIEWNAME);
 		Page.getCurrent().reload();
+	
 	}
 
 	@Subscribe

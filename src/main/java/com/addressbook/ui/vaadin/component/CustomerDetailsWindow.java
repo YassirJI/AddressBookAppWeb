@@ -56,12 +56,7 @@ public final class CustomerDetailsWindow extends Window {
 
         Button ok = new Button("Close");
         ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        ok.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                close();
-            }
-        });
+        ok.addClickListener(e -> close());
         ok.focus();
         footer.addComponent(ok);
         footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);

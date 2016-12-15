@@ -9,7 +9,7 @@
 //import org.vaadin.viritin.fields.MValueChangeEvent;
 //import org.vaadin.viritin.layouts.MHorizontalLayout;
 //import org.vaadin.viritin.layouts.MVerticalLayout;
-//
+// 
 //import com.addressbook.model.Customer;
 //import com.addressbook.service.CustomerService;
 //import com.vaadin.navigator.View;

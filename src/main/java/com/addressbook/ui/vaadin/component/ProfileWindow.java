@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.addressbook.model.User;
 import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
+import com.addressbook.ui.vaadin.event.AddressbookEvent.ProfileUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -14,6 +15,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -38,163 +40,160 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 public class ProfileWindow extends Window {
 
-    public static final String ID = "profilewindow";
+	public static final String ID = "profilewindow";
 
-    private final BeanFieldGroup<User> fieldGroup;
-    
-    @PropertyId("firstName")
-    private TextField firstNameField;
-    @PropertyId("lastName")
-    private TextField lastNameField;
-    @PropertyId("title")
-    private ComboBox titleField;
-    @PropertyId("email")
-    private TextField emailField;
-    @PropertyId("location")
-    private TextField locationField;
-    @PropertyId("phone")
-    private TextField phoneField;
-    
-    private ProfileWindow(final User user) {
-        addStyleName("profile-window");
-        setId(ID);
-        Responsive.makeResponsive(this);
+	private final BeanFieldGroup<User> fieldGroup;
 
-        setModal(true);
-        addCloseShortcut(KeyCode.ESCAPE, null);
-        setResizable(false);
-        setClosable(false);
-        setHeight(90.0f, Unit.PERCENTAGE);
+	@PropertyId("firstName")
+	private TextField firstNameField;
+	@PropertyId("lastName")
+	private TextField lastNameField;
+	@PropertyId("title")
+	private ComboBox titleField;
+	@PropertyId("email")
+	private TextField emailField;
+	@PropertyId("location")
+	private TextField locationField;
+	@PropertyId("phone")
+	private TextField phoneField;
 
-        VerticalLayout content = new VerticalLayout();
-        content.setSizeFull();
-        content.setMargin(new MarginInfo(true, false, false, false));
-        setContent(content);
+	private ProfileWindow(final User user) {
+		addStyleName("profile-window");
+		setId(ID);
+		Responsive.makeResponsive(this);
 
-        TabSheet detailsWrapper = new TabSheet();
-        detailsWrapper.setSizeFull();
-        detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-        detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-        detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-        content.addComponent(detailsWrapper);
-        content.setExpandRatio(detailsWrapper, 1f);
+		setModal(true);
+		addCloseShortcut(KeyCode.ESCAPE, null);
+		setResizable(false);
+		setClosable(false);
+		setHeight(90.0f, Unit.PERCENTAGE);
 
-        detailsWrapper.addComponent(buildProfileTab());
-        
-        content.addComponent(buildFooter());
+		VerticalLayout content = new VerticalLayout();
+		content.setSizeFull();
+		content.setMargin(new MarginInfo(true, false, false, false));
+		setContent(content);
 
-        fieldGroup = new BeanFieldGroup<User>(User.class);
-        fieldGroup.bindMemberFields(this);
-        fieldGroup.setItemDataSource(user);
-    }
+		TabSheet detailsWrapper = new TabSheet();
+		detailsWrapper.setSizeFull();
+		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
+		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
+		content.addComponent(detailsWrapper);
+		content.setExpandRatio(detailsWrapper, 1f);
 
-    private Component buildProfileTab() {
-        HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Profile");
-        root.setIcon(FontAwesome.USER);
-        root.setWidth(100.0f, Unit.PERCENTAGE);
-        root.setSpacing(true);
-        root.setMargin(true);
-        root.addStyleName("profile-form");
+		detailsWrapper.addComponent(buildProfileTab());
 
-        VerticalLayout pic = new VerticalLayout();
-        pic.setSizeUndefined();
-        pic.setSpacing(true);
-        Image profilePic = new Image(null,
-                new ThemeResource("img/profile-pic-300px.jpg"));
-        profilePic.setWidth(100.0f, Unit.PIXELS);
-        pic.addComponent(profilePic);
+		content.addComponent(buildFooter());
 
-        root.addComponent(pic);
+		fieldGroup = new BeanFieldGroup<User>(User.class);
+		fieldGroup.bindMemberFields(this);
+		fieldGroup.setItemDataSource(user);
+	}
 
-        FormLayout details = new FormLayout();
-        details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-        root.addComponent(details);
-        root.setExpandRatio(details, 1);
+	private Component buildProfileTab() {
+		HorizontalLayout root = new HorizontalLayout();
+		root.setCaption("Profile");
+		root.setIcon(FontAwesome.USER);
+		root.setWidth(100.0f, Unit.PERCENTAGE);
+		root.setSpacing(true);
+		root.setMargin(true);
+		root.addStyleName("profile-form");
 
-        firstNameField = new TextField("First Name");
-        details.addComponent(firstNameField);
-        lastNameField = new TextField("Last Name");
-        details.addComponent(lastNameField);
+		VerticalLayout pic = new VerticalLayout();
+		pic.setSizeUndefined();
+		pic.setSpacing(true);
+		Image profilePic = new Image(null,
+				new ThemeResource("img/profile-pic-300px.jpg"));
+		profilePic.setWidth(100.0f, Unit.PIXELS);
+		pic.addComponent(profilePic);
 
-        titleField = new ComboBox("Title",
-                Arrays.asList("Mr.", "Mrs.", "Ms."));
-        details.addComponent(titleField);
+		root.addComponent(pic);
 
-        
-        Label section = new Label("Contact Info");
-        section.addStyleName(ValoTheme.LABEL_H4);
-        section.addStyleName(ValoTheme.LABEL_COLORED);
-        details.addComponent(section);
+		FormLayout details = new FormLayout();
+		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		root.addComponent(details);
+		root.setExpandRatio(details, 1);
 
-        emailField = new TextField("Email");
-        emailField.setWidth("100%");
-        emailField.setRequired(true);
-        details.addComponent(emailField);
+		firstNameField = new TextField("First Name");
+		details.addComponent(firstNameField);
+		lastNameField = new TextField("Last Name");
+		details.addComponent(lastNameField);
 
-        locationField = new TextField("Location");
-        locationField.setWidth("100%");
-        locationField.setRequired(true);
-        details.addComponent(locationField);
+		titleField = new ComboBox("Title",
+				Arrays.asList("Mr.", "Mrs.", "Ms."));
+		details.addComponent(titleField);
 
-        phoneField = new TextField("Phone");
-        phoneField.setWidth("100%");
-        details.addComponent(phoneField);
 
-        return root;
-    }
+		Label section = new Label("Contact Info");
+		section.addStyleName(ValoTheme.LABEL_H4);
+		section.addStyleName(ValoTheme.LABEL_COLORED);
+		details.addComponent(section);
 
-    private Component buildFooter() {
-        HorizontalLayout footer = new HorizontalLayout();
-        footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-        footer.setWidth(100.0f, Unit.PERCENTAGE);
+		emailField = new TextField("Email");
+		emailField.setWidth("100%");
+		emailField.setRequired(true);
+		details.addComponent(emailField);
 
-        Button ok = new Button("OK");
-        ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        ok.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                try {
-                    fieldGroup.commit();
-                   
-                    Notification success = new Notification(
-                            "Profile updated successfully");
-                    success.setDelayMsec(2000);
-                    success.setStyleName("bar success small");
-                    success.setPosition(Position.BOTTOM_CENTER);
-                    success.show(Page.getCurrent());
+		locationField = new TextField("Location");
+		locationField.setWidth("100%");
+		locationField.setRequired(true);
+		details.addComponent(locationField);
 
-					// TODO AddressbookEventBus.post(new ProfileUpdatedEvent());
-                    User user = fieldGroup.getItemDataSource().getBean();
-                    AddressbookUI.getUserService().save(user);
-                    close();
-                } catch (CommitException e) {
-                    Notification.show("Error while updating profile",
-                            Type.ERROR_MESSAGE);
-                }
+		phoneField = new TextField("Phone");
+		phoneField.setWidth("100%");
+		details.addComponent(phoneField);
 
-            }
-        });
-        ok.focus();
-        
-        Button close = new Button("Close");
-        close.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        close.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	close();
-            }});
-        HorizontalLayout buttonsLayout = new HorizontalLayout(ok, close);
-        buttonsLayout.setSpacing(true);
+		return root;
+	}
+
+	private Component buildFooter() {
+		HorizontalLayout footer = new HorizontalLayout();
+		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
+		footer.setWidth(100.0f, Unit.PERCENTAGE);
+
+		Button ok = new Button("OK");
+		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		ok.addClickListener( event-> {
+				try {
+					fieldGroup.commit();
+
+					Notification success = new Notification(
+							"Profile updated successfully");
+					success.setDelayMsec(2000);
+					success.setStyleName("bar success small");
+					success.setPosition(Position.BOTTOM_CENTER);
+					success.show(Page.getCurrent());
+
+					AddressbookEventBus.post(new ProfileUpdatedEvent());
+					User user = fieldGroup.getItemDataSource().getBean();
+					AddressbookUI.getUserService().save(user);
+					refreshCurrentUserDetails(user);
+					close();
+				} catch (CommitException e) {
+					Notification.show("Error while updating profile",
+							Type.ERROR_MESSAGE);
+				}
+		});
+		ok.focus();
+
+		Button close = new Button("Close");
+		close.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		close.addClickListener(e-> close());
+		HorizontalLayout buttonsLayout = new HorizontalLayout(ok, close);
+		buttonsLayout.setSpacing(true);
 		footer.addComponent(buttonsLayout);
-        footer.setComponentAlignment(buttonsLayout, Alignment.TOP_RIGHT);
-        return footer;
-    }
+		footer.setComponentAlignment(buttonsLayout, Alignment.TOP_RIGHT);
+		return footer;
+	}
 
-    public static void open(final User user) {
-        AddressbookEventBus.post(new CloseOpenWindowsEvent());
-        Window w = new ProfileWindow(user);
-        UI.getCurrent().addWindow(w);
-        w.focus();
-    }
+	private void refreshCurrentUserDetails(User user) {
+		VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
+	}
+	
+	public static void open(final User user) {
+		AddressbookEventBus.post(new CloseOpenWindowsEvent());
+		Window w = new ProfileWindow(user);
+		UI.getCurrent().addWindow(w);
+		w.focus();
+	}
 }

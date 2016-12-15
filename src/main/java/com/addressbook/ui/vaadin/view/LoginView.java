@@ -2,8 +2,8 @@ package com.addressbook.ui.vaadin.view;
 
 import javax.annotation.PostConstruct;
 
-import com.addressbook.ui.vaadin.AddressbookUI;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoginRequestedEvent;
+import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -72,16 +72,8 @@ public class LoginView extends VerticalLayout implements View{
 		fields.addComponents(username, password, signin);
 		fields.setComponentAlignment(signin, Alignment.BOTTOM_LEFT);
 
-		signin.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(final ClickEvent event) {
-// TODO
-//				AddressbookEventBus.post(new UserLoginRequestedEvent(username
-//						.getValue(), password.getValue()));
-				((AddressbookUI)getUI()).userLoginRequested(new UserLoginRequestedEvent(username
-						.getValue(), password.getValue()));
-			}
-		});
+		signin.addClickListener(event->
+				AddressbookEventBus.post(new UserLoginRequestedEvent(username.getValue(), password.getValue())));
 		return fields;
 	}
 
@@ -105,7 +97,6 @@ public class LoginView extends VerticalLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
 	}
 
 }

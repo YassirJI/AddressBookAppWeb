@@ -8,7 +8,7 @@ public interface CustomerService {
 
 	List<Customer> findAll();
 
-	List<Customer> findByName(String name);
+	List<Customer> findByNameOrEmailOrPhone(String value);
 
 	void save(Customer customer);
 

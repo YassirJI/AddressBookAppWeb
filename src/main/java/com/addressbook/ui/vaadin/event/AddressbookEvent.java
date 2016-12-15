@@ -50,5 +50,10 @@ public abstract class AddressbookEvent {
 
     public static class ProfileUpdatedEvent {
     }
-
+    
+    public static class AddressbookLineUpdatedEvent { 
+	}
+    
+    public static class AddressbookLineRemovedEvent { 
+	}
 }

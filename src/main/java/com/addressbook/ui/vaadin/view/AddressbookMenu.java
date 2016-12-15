@@ -5,9 +5,9 @@ import com.addressbook.ui.vaadin.component.ProfileWindow;
 import com.addressbook.ui.vaadin.event.AddressbookEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.PostViewChangeEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.ProfileUpdatedEvent;
+import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoggedOutEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
-import com.google.gwt.thirdparty.guava.common.eventbus.Subscribe;
-import com.vaadin.server.Page;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -89,11 +89,8 @@ public class AddressbookMenu extends CustomComponent {
 	        settingsItem.addItem("Sign Out", new Command() {
 	            @Override
 	            public void menuSelected(final MenuItem selectedItem) {
-	                //TODO AddressbookEventBus.post(new UserLoggedOutEvent());
-	            	VaadinSession.getCurrent().close();
-					getUI().getNavigator().navigateTo(LoginView.VIEWNAME);
-	        		Page.getCurrent().reload();
-	        	}
+	                AddressbookEventBus.post(new UserLoggedOutEvent());
+	            }
 	        });
 	        return settings;
 	    }
@@ -145,14 +142,7 @@ public class AddressbookMenu extends CustomComponent {
 	            setCaption(view.getViewName().substring(0, 1).toUpperCase()
 	                    + view.getViewName().substring(1));
 	            AddressbookEventBus.register(this);
-	            addClickListener(new ClickListener() {
-	                @Override
-	                public void buttonClick(final ClickEvent event) {
-	                    getUI().getNavigator()
-	                            .navigateTo(view.getViewName());
-	                }
-	            });
-
+	            addClickListener(e -> { getUI().getNavigator().navigateTo(view.getViewName()); });
 	        }
 
 	        @Subscribe

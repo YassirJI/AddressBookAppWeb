@@ -9,8 +9,6 @@ import com.addressbook.ui.vaadin.component.CustomersListComponent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.google.common.collect.Lists;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -22,7 +20,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
@@ -55,12 +52,7 @@ public final class FavoritesView extends Panel implements View {
         root.addComponent(content);
         root.setExpandRatio(content, 1);
 
-        root.addLayoutClickListener(new LayoutClickListener() {
-            @Override
-            public void layoutClick(final LayoutClickEvent event) {
-                AddressbookEventBus.post(new CloseOpenWindowsEvent());
-            }
-        });
+        root.addLayoutClickListener(event -> AddressbookEventBus.post(new CloseOpenWindowsEvent()));
     }
 
     private Component buildContent() {
@@ -104,12 +96,7 @@ public final class FavoritesView extends Panel implements View {
         tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
         
         MenuItem root = tools.addItem("", FontAwesome.COG, null);
-        root.addItem("Export", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-                Notification.show("Not implemented in this demo");
-            }
-        });
+        root.addItem("Export", menu -> Notification.show("Not implemented in this demo"));
         
         toolbar.addComponents(caption, tools);
         toolbar.setExpandRatio(caption, 1);
@@ -118,16 +105,16 @@ public final class FavoritesView extends Panel implements View {
 	}
 
     
-    @Override
-    public void enter(final ViewChangeEvent event) {
-    }
-    
     private User getCurrentUser() {
-        return (User) VaadinSession.getCurrent()
-                .getAttribute(User.class.getName());
+        return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
     }
 
     private List<Customer> getFavoriteCustomers() {
 		return AddressbookUI.getUserService().findCustomersByUser(getCurrentUser().getId());
 	}
+
+    @Override
+    public void enter(final ViewChangeEvent event) {
+    }
+    
 }

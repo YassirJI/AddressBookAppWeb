@@ -1,0 +1,95 @@
+[33mcommit 754c3a4f9ee6cf5a93d180832cc9743c59a092c2[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Thu Dec 15 23:19:34 2016 +0000
+
+    Adapt actions
+
+[33mcommit 8777c685fd13d851d926756abd3a2b7b0af898a6[m
+Author: Yassir JANATI IDRISSI <Yassir.JanatiIdrissi@nespresso.com>
+Date:   Wed Dec 14 18:16:41 2016 +0000
+
+    Adapt favorite list actions
+
+[33mcommit c5e65db60d247a205c8dad1c79e5cb86524fa2c4[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Wed Dec 14 01:53:04 2016 +0000
+
+    adapt favorite relation and services
+
+[33mcommit cd8c59b74c51361962d5b8f8e77562abe8a9d197[m
+Author: Yassir JANATI IDRISSI <Yassir.JanatiIdrissi@nespresso.com>
+Date:   Thu Dec 8 18:26:15 2016 +0000
+
+    add hsqldb
+
+[33mcommit 3ae718951b4cda9465f971df85850e6179b8ad64[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Wed Dec 7 23:52:16 2016 +0000
+
+    New adaptations
+
+[33mcommit 20a5cbc81a9ac964000d7b6f7d47abf8f349a417[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Wed Dec 7 02:07:27 2016 +0000
+
+    Adapt customers list
+
+[33mcommit a8c166530996bee2b9d02369163059a6c30ec431[m
+Author: Yassir JANATI IDRISSI <Yassir.JanatiIdrissi@nespresso.com>
+Date:   Tue Dec 6 18:03:17 2016 +0000
+
+    add new codes
+
+[33mcommit ad0807c38a2b5a8debac6b3bead52b9dfd6e17d8[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Tue Dec 6 01:34:54 2016 +0000
+
+    Favorites view
+
+[33mcommit c6a36d47d601aa2471a82d3dbd24f920ef9d44e0[m
+Author: Yassir JANATI IDRISSI <Yassir.JanatiIdrissi@nespresso.com>
+Date:   Mon Dec 5 17:14:22 2016 +0000
+
+    add favorite list
+
+[33mcommit caba52952bb1375200825d5b6405df331881de13[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Mon Dec 5 01:40:03 2016 +0000
+
+    add menus
+
+[33mcommit c10b5f191724c875cbe25ae33815cdb3917ee048[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Mon Dec 5 00:23:17 2016 +0000
+
+    new updates
+
+[33mcommit b1e6e66ac76316063ab233213f71eef762ce3140[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Sat Dec 3 02:07:33 2016 +0000
+
+    User authentification
+
+[33mcommit 6524750578a270a5d55fccd04fa7faff3758679e[m
+Author: Yassir JANATI IDRISSI <Yassir.JanatiIdrissi@nespresso.com>
+Date:   Fri Dec 2 16:35:28 2016 +0000
+
+    Adapt code
+
+[33mcommit 173788dce0a61173e33cd03bbdd02a964e828e94[m
+Author: Yassir JANATI IDRISSI <Yassir.JanatiIdrissi@nespresso.com>
+Date:   Fri Dec 2 10:32:15 2016 +0000
+
+    remove unused files
+
+[33mcommit a59942b70906e195348b314105022c1e631bd6e3[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Fri Dec 2 03:13:14 2016 +0000
+
+    2sd commit
+
+[33mcommit be00550c8bbd98b5285fbcbec76bac8aedb8ac8f[m
+Author: Yassir <helloseries2016@gmail.com>
+Date:   Thu Dec 1 01:46:09 2016 +0000
+
+    first commit

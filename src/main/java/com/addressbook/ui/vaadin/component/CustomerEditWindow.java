@@ -2,6 +2,7 @@ package com.addressbook.ui.vaadin.component;
 
 import com.addressbook.model.Customer;
 import com.addressbook.ui.vaadin.AddressbookUI;
+import com.addressbook.ui.vaadin.event.AddressbookEvent.AddressbookLineUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.CloseOpenWindowsEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -118,41 +119,33 @@ public class CustomerEditWindow extends Window {
 		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
 		footer.setWidth(100.0f, Unit.PERCENTAGE);
 
-		Button ok = new Button("OK");
-		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		ok.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
+		Button save = new Button("Save");
+		save.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		save.addClickListener(event -> {
 				try {
 					fieldGroup.commit();
+					Customer customer = fieldGroup.getItemDataSource().getBean();
+					AddressbookUI.getCustomerService().save(customer);
 
-					Notification success = new Notification(
-							"Profile updated successfully");
+					Notification success = new Notification("Addressbook updated successfully");
 					success.setDelayMsec(2000);
 					success.setStyleName("bar success small");
 					success.setPosition(Position.BOTTOM_CENTER);
 					success.show(Page.getCurrent());
 
-					// TODO AddressbookEventBus.post(new ProfileUpdatedEvent());
-					Customer customer = fieldGroup.getItemDataSource().getBean();
-					AddressbookUI.getCustomerService().save(customer);
+					AddressbookEventBus.post(new AddressbookLineUpdatedEvent());
 					close();
 				} catch (CommitException e) {
 					Notification.show("Error while updating customer",
 							Type.ERROR_MESSAGE);
 				}
-
-			}
 		});
-		ok.focus();
-		Button close = new Button("Close");
-		close.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		close.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				close();
-			}});
-		HorizontalLayout buttonsLayout = new HorizontalLayout(ok, close);
+		save.focus();
+		Button cancel = new Button("Cancel");
+		cancel.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		cancel.addClickListener(e-> close());
+		
+		HorizontalLayout buttonsLayout = new HorizontalLayout(cancel, save);
 		buttonsLayout.setSpacing(true);
 		footer.addComponent(buttonsLayout);
 		footer.setComponentAlignment(buttonsLayout, Alignment.TOP_RIGHT);
