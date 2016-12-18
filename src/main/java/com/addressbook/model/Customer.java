@@ -27,7 +27,7 @@ public class Customer{
 	@Column(nullable = false)
 	private String email;
 
-	@ManyToMany(mappedBy = "customers", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "customers",cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
 	private Set<User> users;
 
 	protected Customer() {

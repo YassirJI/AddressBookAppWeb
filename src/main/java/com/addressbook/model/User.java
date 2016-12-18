@@ -3,7 +3,6 @@ package com.addressbook.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,7 @@ public class User {
 	private String password;
 	private Role role;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_customer", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private Set<Customer> customers;
 

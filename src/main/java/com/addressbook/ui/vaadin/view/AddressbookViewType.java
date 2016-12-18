@@ -8,8 +8,8 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 
 public enum AddressbookViewType {
-	ADDRESSBOOK("All addresses", AddressbookView.class, FontAwesome.LIST_UL, true),
-	FAVORITES("Favorites list", FavoritesView.class, FontAwesome.STAR_O, true),
+	ADDRESSBOOK("All addresses", AddressbookView.class, FontAwesome.LIST_UL, false),
+	FAVORITES("Favorites list", FavoritesView.class, FontAwesome.STAR_O, false),
 	IMPORT("Import list", ImportListView.class, FontAwesome.UPLOAD, true);
 
     private final String viewName;

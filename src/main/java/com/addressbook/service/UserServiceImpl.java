@@ -1,6 +1,7 @@
 package com.addressbook.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import com.addressbook.model.Customer;
 import com.addressbook.model.User;
 import com.addressbook.repository.UserRepository;
 import com.addressbook.utils.PasswordEncoder;
+import com.google.common.collect.Sets;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,14 +47,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addFavoriteCustomer(long id, Customer customer) {
 		User user = userRepository.findOne(id);
-		user.getCustomers().add(customer);
+		Set<Customer> customers = Sets.newHashSet(findCustomersByUser(id));
+		customers.add(customer);
+		user.setCustomers(customers);
 		userRepository.save(user);
 	}
 
 	@Override
 	public void removeFavoriteCustomer(long id, Customer customer) {
 		User user = userRepository.findOne(id);
-		user.getCustomers().remove(customer);
+		Set<Customer> customers = Sets.newHashSet(findCustomersByUser(id));
+		customers.remove(customer);
+		user.setCustomers(customers);
 		userRepository.save(user);
 	}
 

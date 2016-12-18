@@ -6,6 +6,7 @@ import com.addressbook.model.Customer;
 import com.addressbook.model.User;
 import com.addressbook.model.User.Role;
 import com.addressbook.ui.vaadin.AddressbookUI;
+import com.addressbook.ui.vaadin.addressbook.CustomersLoader;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.AddressbookLineRemovedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.AddressbookLineUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEventBus;
@@ -46,9 +47,11 @@ public final class CustomersListComponent extends VerticalLayout{
 
 	private List<Customer> customersList;
 
-	public CustomersListComponent(List<Customer> customersList) {
-		this.customersList = customersList;
+	private CustomersLoader customersLoader;
 
+	public CustomersListComponent(CustomersLoader customersLoader) {
+		this.customersLoader = customersLoader;
+		this.customersList = customersLoader.loadCustomers();
 		addStyleName("customers-list");
 		setSizeFull();
 
@@ -117,6 +120,7 @@ public final class CustomersListComponent extends VerticalLayout{
 				if (getUserCustomers().contains(selectedCustomer)) {
 					AddressbookUI.getUserService().removeFavoriteCustomer(getCurrentUser().getId(), selectedCustomer);
 					ShowNotificationMessage("Addressbook of "+ selectedCustomer.getName() +" is removed from my favorite list");
+					refreshDataGrid();
 				} else {
 					AddressbookUI.getUserService().addFavoriteCustomer(getCurrentUser().getId(), selectedCustomer);
 					ShowNotificationMessage("Addressbook of "+ selectedCustomer.getName() +" is now in my favorite list");
@@ -245,14 +249,10 @@ public final class CustomersListComponent extends VerticalLayout{
 		favoriteBtn.setEnabled(state);
 	}
 
-	private User getCurrentUser() {
-		return (User) VaadinSession.getCurrent()
-				.getAttribute(User.class.getName());
-	}
 
 	@Subscribe
 	public void updateAddressbookLine(final AddressbookLineUpdatedEvent event) {
-		// TODO
+		refreshDataGrid();
 	}
 
 	@Subscribe
@@ -260,9 +260,19 @@ public final class CustomersListComponent extends VerticalLayout{
 		Customer selectedItem = (Customer) customersGrid.getSelectedRow();
 		customersGrid.getContainerDataSource().removeItem(selectedItem);
 	}
-
+	
+	private User getCurrentUser() {
+		return (User) VaadinSession.getCurrent()
+				.getAttribute(User.class.getName());
+	}
+	
 	private boolean hasAdminRole() {
 		return Role.ADMIN.equals(getCurrentUser().getRole());
 	}
 
+	private void refreshDataGrid(){
+		List<Customer> customersList = customersLoader.loadCustomers();
+		BeanItemContainer<Customer> customerContainer = new BeanItemContainer<Customer>(Customer.class, customersList);
+		customersGrid.setContainerDataSource(customerContainer);
+	}
 }

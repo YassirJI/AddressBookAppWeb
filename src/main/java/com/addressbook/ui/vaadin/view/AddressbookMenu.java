@@ -1,8 +1,8 @@
 package com.addressbook.ui.vaadin.view;
 
 import com.addressbook.model.User;
+import com.addressbook.model.User.Role;
 import com.addressbook.ui.vaadin.component.ProfileWindow;
-import com.addressbook.ui.vaadin.event.AddressbookEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.PostViewChangeEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.ProfileUpdatedEvent;
 import com.addressbook.ui.vaadin.event.AddressbookEvent.UserLoggedOutEvent;
@@ -26,131 +26,138 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 public class AddressbookMenu extends CustomComponent {
 
-	    public static final String ID = "addressbook-menu";
-	    private static final String STYLE_VISIBLE = "valo-menu-visible";
-	    private MenuItem settingsItem;
+	public static final String ID = "addressbook-menu";
+	private static final String STYLE_VISIBLE = "valo-menu-visible";
+	private MenuItem settingsItem;
 
-	    public AddressbookMenu() {
-	        setPrimaryStyleName("valo-menu");
-	        setId(ID);
-	        setSizeUndefined();
+	public AddressbookMenu() {
+		setPrimaryStyleName("valo-menu");
+		setId(ID);
+		setSizeUndefined();
 
-	        AddressbookEventBus.register(this);
+		AddressbookEventBus.register(this);
 
-	        setCompositionRoot(buildContent());
-	    }
+		setCompositionRoot(buildContent());
+	}
 
-	    private Component buildContent() {
-	        final CssLayout menuContent = new CssLayout();
-	        menuContent.addStyleName("sidebar");
-	        menuContent.addStyleName(ValoTheme.MENU_PART);
-	        menuContent.addStyleName("no-vertical-drag-hints");
-	        menuContent.addStyleName("no-horizontal-drag-hints");
-	        menuContent.setWidth(null);
-	        menuContent.setHeight("100%");
+	private Component buildContent() {
+		final CssLayout menuContent = new CssLayout();
+		menuContent.addStyleName("sidebar");
+		menuContent.addStyleName(ValoTheme.MENU_PART);
+		menuContent.addStyleName("no-vertical-drag-hints");
+		menuContent.addStyleName("no-horizontal-drag-hints");
+		menuContent.setWidth(null);
+		menuContent.setHeight("100%");
 
-	        menuContent.addComponent(buildTitle());
-	        menuContent.addComponent(buildUserMenu());
-	        menuContent.addComponent(buildMenuItems());
+		menuContent.addComponent(buildTitle());
+		menuContent.addComponent(buildUserMenu());
+		menuContent.addComponent(buildMenuItems());
 
-	        return menuContent;
-	    }
+		return menuContent;
+	}
 
-	    private Component buildTitle() {
-	        Label logo = new Label("My <strong>Addressbook</strong>",
-	                ContentMode.HTML);
-	        logo.setSizeUndefined();
-	        HorizontalLayout logoWrapper = new HorizontalLayout(logo);
-	        logoWrapper.setComponentAlignment(logo, Alignment.MIDDLE_CENTER);
-	        logoWrapper.addStyleName("valo-menu-title");
-	        return logoWrapper;
-	    }
+	private Component buildTitle() {
+		Label logo = new Label("My <strong>Addressbook</strong>",
+				ContentMode.HTML);
+		logo.setSizeUndefined();
+		HorizontalLayout logoWrapper = new HorizontalLayout(logo);
+		logoWrapper.setComponentAlignment(logo, Alignment.MIDDLE_CENTER);
+		logoWrapper.addStyleName("valo-menu-title");
+		return logoWrapper;
+	}
 
-	    private User getCurrentUser() {
-	        return (User) VaadinSession.getCurrent()
-	                .getAttribute(User.class.getName());
-	    }
+	private User getCurrentUser() {
+		return (User) VaadinSession.getCurrent()
+				.getAttribute(User.class.getName());
+	}
 
-	    private Component buildUserMenu() {
-	        final MenuBar settings = new MenuBar();
-	        settings.addStyleName("user-menu");
-	        final User user = getCurrentUser();
-	        settingsItem = settings.addItem("",
-	                new ThemeResource("img/profile-pic-300px.jpg"), null);
-	        updateUserName(null);
-	        settingsItem.addItem("Edit Profile", new Command() {
-	            @Override
-	            public void menuSelected(final MenuItem selectedItem) {
-	                ProfileWindow.open(user);
-	            }
-	        });
-	        
-	        settingsItem.addSeparator();
-	        settingsItem.addItem("Sign Out", new Command() {
-	            @Override
-	            public void menuSelected(final MenuItem selectedItem) {
-	                AddressbookEventBus.post(new UserLoggedOutEvent());
-	            }
-	        });
-	        return settings;
-	    }
+	private boolean hasAdminRole() {
+		return Role.ADMIN.equals(getCurrentUser().getRole());
+	}
 
-	    private Component buildMenuItems() {
-	        CssLayout menuItemsLayout = new CssLayout();
-	        menuItemsLayout.addStyleName("valo-menuitems");
+	private Component buildUserMenu() {
+		final MenuBar settings = new MenuBar();
+		settings.addStyleName("user-menu");
+		final User user = getCurrentUser();
+		settingsItem = settings.addItem("",
+				new ThemeResource("img/profile-pic-300px.jpg"), null);
+		updateUserName(null);
+		settingsItem.addItem("Edit Profile", new Command() {
+			@Override
+			public void menuSelected(final MenuItem selectedItem) {
+				ProfileWindow.open(user);
+			}
+		});
 
-	        for (final AddressbookViewType view : AddressbookViewType.values()) {
-	            Component menuItemComponent = new ValoMenuItemButton(view);
+		settingsItem.addSeparator();
+		settingsItem.addItem("Sign Out", new Command() {
+			@Override
+			public void menuSelected(final MenuItem selectedItem) {
+				AddressbookEventBus.post(new UserLoggedOutEvent());
+			}
+		});
+		return settings;
+	}
 
-	            if (view == AddressbookViewType.ADDRESSBOOK) {
-	                menuItemComponent = buildBadgeWrapper(menuItemComponent);
-	            }
-	            menuItemsLayout.addComponent(menuItemComponent);
-	        }
-	        return menuItemsLayout;
+	private Component buildMenuItems() {
+		CssLayout menuItemsLayout = new CssLayout();
+		menuItemsLayout.addStyleName("valo-menuitems");
 
-	    }
+		for (final AddressbookViewType view : AddressbookViewType.values()) {
+			Component menuItemComponent = new ValoMenuItemButton(view);
 
-	    private Component buildBadgeWrapper(final Component menuItemButton) {
-	        CssLayout addressbookWrapper = new CssLayout(menuItemButton);
-	        addressbookWrapper.addStyleName("badgewrapper");
-	        addressbookWrapper.addStyleName(ValoTheme.MENU_ITEM);
-	        return addressbookWrapper;
-	    }
+			if (view == AddressbookViewType.ADDRESSBOOK) {
+				menuItemComponent = buildBadgeWrapper(menuItemComponent);
+			}
+			if (view == AddressbookViewType.IMPORT && !hasAdminRole()) {
+				continue;
+			}
+			menuItemsLayout.addComponent(menuItemComponent);
+		}
+		return menuItemsLayout;
 
-	    @Subscribe
-	    public void postViewChange(final PostViewChangeEvent event) {
-	        getCompositionRoot().removeStyleName(STYLE_VISIBLE);
-	    }
+	}
 
-	    @Subscribe
-	    public void updateUserName(final ProfileUpdatedEvent event) {
-	        User user = getCurrentUser();
-	        settingsItem.setText(user.getFirstName() + " " + user.getLastName());
-	    }
+	private Component buildBadgeWrapper(final Component menuItemButton) {
+		CssLayout addressbookWrapper = new CssLayout(menuItemButton);
+		addressbookWrapper.addStyleName("badgewrapper");
+		addressbookWrapper.addStyleName(ValoTheme.MENU_ITEM);
+		return addressbookWrapper;
+	}
 
-	    public final class ValoMenuItemButton extends Button {
+	@Subscribe
+	public void postViewChange(final PostViewChangeEvent event) {
+		getCompositionRoot().removeStyleName(STYLE_VISIBLE);
+	}
 
-	        private static final String STYLE_SELECTED = "selected";
+	@Subscribe
+	public void updateUserName(final ProfileUpdatedEvent event) {
+		User user = getCurrentUser();
+		settingsItem.setText(user.getFirstName() + " " + user.getLastName());
+	}
 
-	        private final AddressbookViewType view;
+	public final class ValoMenuItemButton extends Button {
 
-	        public ValoMenuItemButton(final AddressbookViewType view) {
-	            this.view = view;
-	            setPrimaryStyleName("valo-menu-item");
-	            setIcon(view.getIcon());
-	            setCaption(view.getViewName().substring(0, 1).toUpperCase()
-	                    + view.getViewName().substring(1));
-	            AddressbookEventBus.register(this);
-	            addClickListener(e -> { getUI().getNavigator().navigateTo(view.getViewName()); });
-	        }
+		private static final String STYLE_SELECTED = "selected";
 
-	        @Subscribe
-	        public void postViewChange(final AddressbookEvent.PostViewChangeEvent event) {
-	            removeStyleName(STYLE_SELECTED);
-	            if (event.getView() == view) {
-	                addStyleName(STYLE_SELECTED);
-	            }
-	        }
-	    }
+		private final AddressbookViewType view;
+
+		public ValoMenuItemButton(final AddressbookViewType view) {
+			this.view = view;
+			setPrimaryStyleName("valo-menu-item");
+			setIcon(view.getIcon());
+			setCaption(view.getViewName().substring(0, 1).toUpperCase()
+					+ view.getViewName().substring(1));
+			AddressbookEventBus.register(this);
+			addClickListener(e -> { getUI().getNavigator().navigateTo(view.getViewName()); });
+		}
+
+		@Subscribe
+		public void postViewChange(final PostViewChangeEvent event) {
+			removeStyleName(STYLE_SELECTED);
+			if (event.getView() == view) {
+				addStyleName(STYLE_SELECTED);
+			}
+		}
+	}
 }

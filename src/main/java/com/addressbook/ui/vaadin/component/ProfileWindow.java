@@ -20,8 +20,6 @@ import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
@@ -164,10 +162,10 @@ public class ProfileWindow extends Window {
 					success.setPosition(Position.BOTTOM_CENTER);
 					success.show(Page.getCurrent());
 
-					AddressbookEventBus.post(new ProfileUpdatedEvent());
 					User user = fieldGroup.getItemDataSource().getBean();
 					AddressbookUI.getUserService().save(user);
 					refreshCurrentUserDetails(user);
+					AddressbookEventBus.post(new ProfileUpdatedEvent());
 					close();
 				} catch (CommitException e) {
 					Notification.show("Error while updating profile",
