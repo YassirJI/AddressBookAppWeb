@@ -1,7 +1,8 @@
 AddressbookApp
 ==============
 
-Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
+The address book app, allows the admin to add-remove and update customers, and also to research in the database.
+As, for the other users, they are only allowed to list all the customers and add to favorites list.
 
 
 Workflow
@@ -9,7 +10,7 @@ Workflow
 
 To compile the entire project, run "mvn install".
 
-To run the application, run "mvn jetty:run" and open http://localhost:8080/ .
+To run the application, run the main method of "MyAddressbookApplication.java" class and open http://localhost:8080/ .
 
 To produce a deployable production mode WAR:
 - change productionMode to true in the servlet class configuration (nested in the UI class)
